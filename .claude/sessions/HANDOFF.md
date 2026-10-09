@@ -1,7 +1,7 @@
 # Project Handoff (updated 2026-10-08)
 
 ## Where we are
-This is Farhan Khan's single-page portfolio, built in Next.js 16.4 (static export), Tailwind v4 and GSAP 3.15, and served as static assets on Cloudflare Workers. Phase 1 of 6 is done and deployed to https://farhan-khan.farhank-dev.workers.dev. It has the design system ("Blueprint Terminal": dark default plus a light blueprint-paper theme), all real content in `content/`, a theme toggle, and a terminal-styled 404 page. The page is still an unpolished shell with no animation. `PLAN.md` is the source of truth for every section spec and animation.
+This is Farhan Khan's single-page portfolio, built in Next.js 16.4 (static export), Tailwind v4 and GSAP 3.15, and served as static assets on Cloudflare Workers. Phase 1 of 6 is done and deployed to https://farhan-khan.farhank-dev.workers.dev. It has the design system ("Blueprint Terminal": dark default plus a light blueprint-paper theme), all real content in `content/`, a theme toggle, and a terminal-styled 404 page. The page is still an unpolished shell with no animation. `PLAN.md` is the source of truth for every section spec and animation. The code lives in the private GitHub repo https://github.com/farh4nk/portfolio (`main`), and Phase 1 is pushed.
 
 ## Next steps (ordered)
 1. **Phase 2, the full static layout, per PLAN.md §4:**
@@ -27,6 +27,7 @@ This is Farhan Khan's single-page portfolio, built in Next.js 16.4 (static expor
 - **Emphasis:** only Quenova, MIRA and Brain Invaders get full case files. reciPal, LUNA and NutriScope stay compact in the hackathon strip.
 - **Hackathon order:** BYTE Hacks → NASA Space Apps → Hack Knight → SBUHacks ★ → HackRPI ★.
 - **Copy accuracy:** only state what the code, Devpost or demos confirm. Use Devpost prize names ("Best First-Time Hack"). MIRA uses HTTP frame POSTs and YOLOv8, with no WebSockets and no depth estimation. He did not pitch reciPal. LUNA has no backend link, and its placeholder author names and researcher panel aren't real. Quenova links to the site only (its repo is private).
+- **The repo stays private** until the MIRA-keys pointer is removed from `.claude/sessions/`. To publish it: `gh repo edit farh4nk/portfolio --visibility public --accept-visibility-change-consequences`.
 - **No phone number.** The medical ed role stays generic. Hosting stays on `workers.dev` with no custom domain.
 - **All copy lives in `content/*.ts`.** Design tokens are in `app/globals.css`, and GSAP plugins are registered once in `lib/gsap.ts`.
 - **Respect `prefers-reduced-motion`:** wrap all animation in `gsap.matchMedia()`, and hide content only under `html.js`.
