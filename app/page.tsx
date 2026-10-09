@@ -1,69 +1,141 @@
-import Image from "next/image";
+import { Header } from "@/components/Header";
+import { experience } from "@/content/experience";
+import { profile } from "@/content/profile";
+import { featured, hackathons } from "@/content/projects";
+import { skills } from "@/content/skills";
+
+// Phase 1 shell: real content on the design system, no layout polish or motion yet.
+function SectionLabel({ index, title }: { index: number; title: string }) {
+  return (
+    <p className="label-mono mb-6">
+      <span className="text-accent">{"// "}{String(index).padStart(2, "0")}</span> — {title}
+    </p>
+  );
+}
+
+function Chip({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="label-mono rounded border border-rule px-2 py-1 normal-case tracking-normal text-ink">
+      {children}
+    </span>
+  );
+}
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
+    <>
+      <Header />
+      <main id="top" className="mx-auto max-w-6xl px-4 sm:px-6">
+        <section className="py-24 sm:py-32">
+          <p className="label-mono mb-6">{profile.kicker}</p>
+          <h1 className="font-display text-[clamp(3rem,9vw,8rem)] leading-[0.9] font-bold tracking-[-0.04em] uppercase">
+            {profile.name}
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="mt-6 font-mono text-lg text-term">
+            &gt; {profile.roles[0]}
+            <span className="animate-pulse">▍</span>
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
+          <p className="mt-8 max-w-2xl font-display text-2xl font-medium sm:text-3xl">{profile.tagline}</p>
+          <p className="mt-4 max-w-2xl text-ink-muted">{profile.summary}</p>
+          <div className="mt-10 flex flex-wrap gap-3">
+            <a href="#work" className="label-mono rounded-md bg-accent px-4 py-3 font-bold text-bg">
+              [ View work ↓ ]
+            </a>
+            <a
+              href={profile.links.github}
+              className="label-mono rounded-md border border-rule px-4 py-3 text-ink hover:border-accent"
+            >
+              [ GitHub ↗ ]
+            </a>
+          </div>
+        </section>
+
+        <section aria-label="Highlights" className="grid grid-cols-2 gap-px border border-rule bg-rule md:grid-cols-4">
+          {profile.stats.map((s) => (
+            <div key={s.label} className="bg-bg p-6">
+              <p className="font-display text-4xl font-bold">
+                {s.value.toLocaleString("en-US", { minimumFractionDigits: s.decimals })}
+                <span className="text-accent">{s.suffix}</span>
+              </p>
+              <p className="label-mono mt-2">{s.label}</p>
+            </div>
+          ))}
+        </section>
+
+        <section id="work" className="scroll-mt-20 py-24">
+          <SectionLabel index={1} title="work" />
+          <div className="grid gap-4 md:grid-cols-3">
+            {featured.map((p) => (
+              <article key={p.slug} className="rounded-md border border-rule bg-bg-raised p-6">
+                <p className="label-mono">{p.context}</p>
+                <h3 className="mt-2 font-display text-2xl font-bold">{p.name}</h3>
+                {p.award && <p className="label-mono mt-1 text-signal">★ {p.award}</p>}
+                <p className="mt-3 text-sm text-ink-muted">{p.tagline}</p>
+              </article>
+            ))}
+          </div>
+          <ol className="mt-12 space-y-2">
+            {hackathons.map((h) => (
+              <li key={h.order} className="font-mono text-sm">
+                <span className="text-ink-muted">{String(h.order).padStart(2, "0")}</span>{" "}
+                <span className={h.award ? "text-signal" : "text-accent"}>{h.award ? "★" : "●"}</span>{" "}
+                {h.event} — {h.project}
+                {h.award && <span className="text-ink-muted"> · {h.award}</span>}
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <section id="experience" className="scroll-mt-20 py-24">
+          <SectionLabel index={2} title="experience" />
+          <ol className="space-y-10 border-l border-rule pl-6">
+            {experience.map((r) => (
+              <li key={r.org}>
+                <p className="label-mono">{r.dates}</p>
+                <h3 className="font-display text-xl font-bold">{r.title}</h3>
+                <p className="text-accent">{r.org}</p>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <section id="stack" className="scroll-mt-20 py-24">
+          <SectionLabel index={3} title="stack" />
+          <div className="grid gap-8 md:grid-cols-3">
+            {skills.map((g) => (
+              <div key={g.id}>
+                <h3 className="font-display font-bold">{g.label}</h3>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {g.items.map((i) => (
+                    <Chip key={i}>{i}</Chip>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section id="about" className="scroll-mt-20 py-24">
+          <SectionLabel index={4} title="about" />
+          <h3 className="font-display text-xl font-bold">{profile.education.school}</h3>
+          <p className="text-ink-muted">
+            {profile.education.degree} · {profile.education.graduation} · {profile.education.honors.join(" · ")}
+          </p>
+        </section>
+
+        <section id="contact" className="scroll-mt-20 py-24">
+          <SectionLabel index={5} title="contact" />
+          <h2 className="font-display text-5xl font-bold">Let&apos;s build something.</h2>
+          <a href={`mailto:${profile.email}`} className="mt-6 inline-block font-mono text-accent">
+            {profile.email}
           </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+        </section>
       </main>
-    </div>
+      <footer className="border-t border-rule">
+        <p className="label-mono mx-auto max-w-6xl px-4 py-8 sm:px-6">
+          built with next.js + gsap · deployed on cloudflare
+        </p>
+      </footer>
+    </>
   );
 }

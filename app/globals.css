@@ -1,26 +1,103 @@
 @import "tailwindcss";
 
+/* ── Design tokens: "Blueprint Terminal" ───────────────────────────
+   Dark is the default. Light ("blueprint paper") is opt-in via [data-theme="light"]. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #070b14;
+  --bg-raised: #0d1424;
+  --grid: rgba(91, 192, 235, 0.07);
+  --grid-major: rgba(91, 192, 235, 0.12);
+  --rule: #1e2a40;
+  --ink: #e6edf7;
+  --ink-muted: #8a97ad;
+  --accent: #5bc0eb;
+  --term: #3dffa2;
+  --signal: #ff6b35;
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  --bg: #f4f1e8;
+  --bg-raised: #ece7da;
+  --grid: rgba(27, 36, 51, 0.06);
+  --grid-major: rgba(27, 36, 51, 0.11);
+  --rule: #ddd6c6;
+  --ink: #1b2433;
+  --ink-muted: #5b6478;
+  --accent: #2f5bea;
+  --term: #0b7a53;
+  --signal: #e8572a;
+  color-scheme: light;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-bg-raised: var(--bg-raised);
+  --color-rule: var(--rule);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-accent: var(--accent);
+  --color-term: var(--term);
+  --color-signal: var(--signal);
+
+  --font-display: var(--font-space-grotesk);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: var(--bg);
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  /* Blueprint grid: 32px minor lines, 160px major lines */
+  background-image:
+    linear-gradient(var(--grid-major) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size:
+    160px 160px,
+    160px 160px,
+    32px 32px,
+    32px 32px;
+  background-position: -1px -1px;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* Mono section label, e.g. "// 02 — EXPERIENCE" */
+@utility label-mono {
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
 }
