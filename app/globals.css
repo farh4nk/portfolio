@@ -116,9 +116,14 @@ html.js:not(.motion-reduced) [data-reveal] {
   transform: translateY(24px);
 }
 
-html.js:not(.motion-reduced) [data-hero-name],
-html.js:not(.motion-reduced) [data-split-words],
-html.js:not(.motion-reduced) [data-hero-item] {
+html.js:not(.motion-reduced) [data-split-words] {
+  visibility: hidden;
+}
+
+/* While the boot overlay covers it, the hero paints normally so LCP lands on first paint;
+   HeroIntro sets the hidden start states on hydration, still under the overlay. */
+html.js:not(.motion-reduced):not(.booting) [data-hero-name],
+html.js:not(.motion-reduced):not(.booting) [data-hero-item] {
   visibility: hidden;
 }
 

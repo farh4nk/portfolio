@@ -24,6 +24,7 @@ export function Hero() {
                   src={publicAsset(profile.portrait)}
                   alt={`Portrait of ${profile.name}`}
                   pending="portrait.jpg"
+                  priority
                   sizes="(min-width: 1280px) 288px, (min-width: 1024px) 256px, 144px"
                   className="aspect-[4/5] rounded-md border border-rule"
                 />

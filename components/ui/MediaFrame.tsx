@@ -9,6 +9,7 @@ export function MediaFrame({
   className = "",
   imageClassName = "",
   focus = "top",
+  priority = false,
 }: {
   src?: string;
   alt: string;
@@ -17,11 +18,13 @@ export function MediaFrame({
   className?: string;
   imageClassName?: string;
   focus?: "top" | "center";
+  /** The LCP image: fetch it eagerly at high priority (Next 16 prefers this over `preload`). */
+  priority?: boolean;
 }) {
   return (
     <div className={`relative overflow-hidden bg-bg ${className}`}>
       {src ? (
-        <Image src={src} alt={alt} fill sizes={sizes} className={`object-cover ${focus === "center" ? "object-center" : "object-top"} ${imageClassName}`} />
+        <Image src={src} alt={alt} fill sizes={sizes} loading={priority ? "eager" : undefined} fetchPriority={priority ? "high" : undefined} className={`object-cover ${focus === "center" ? "object-center" : "object-top"} ${imageClassName}`} />
       ) : (
         <div className="absolute inset-0 grid place-items-center">
           <svg aria-hidden className="absolute inset-0 h-full w-full text-rule" preserveAspectRatio="none">
