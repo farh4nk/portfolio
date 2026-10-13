@@ -16,6 +16,7 @@ gsap.registerPlugin(useGSAP, ScrollTrigger, Flip, SplitText, DrawSVGPlugin, Moti
 export const MOTION_OK = "(prefers-reduced-motion: no-preference)";
 
 /** Characters ScrambleText cycles through for mono labels. */
-export const SCRAMBLE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/_<>";
+// No < > or &: ScrambleText writes HTML, so those would show up as entity fragments.
+export const SCRAMBLE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/_";
 
 export { gsap, ScrollTrigger, Flip, SplitText, useGSAP };

@@ -2,18 +2,21 @@ import { About } from "@/components/about/About";
 import { Contact } from "@/components/contact/Contact";
 import { Footer } from "@/components/contact/Footer";
 import { CircuitTimeline } from "@/components/experience/CircuitTimeline";
+import { BootIntro } from "@/components/BootIntro";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/hero/Hero";
 import { PageMotion } from "@/components/motion/PageMotion";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { StackExplorer } from "@/components/stack/StackExplorer";
+import { Terminal } from "@/components/terminal/Terminal";
 import { Marquee } from "@/components/ui/Marquee";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { Stats } from "@/components/ui/Stats";
 import { BentoGrid } from "@/components/work/BentoGrid";
 import { CaseFileController } from "@/components/work/CaseFile";
 import { HackathonRun } from "@/components/work/HackathonRun";
+import { profile } from "@/content/profile";
 import { featured } from "@/content/projects";
 import { publicAsset } from "@/lib/assets";
 
@@ -23,6 +26,7 @@ const section = `${container} scroll-mt-16 py-24 sm:py-32`;
 export default function Home() {
   return (
     <>
+      <BootIntro />
       <SmoothScroll />
       <ScrollProgress />
       <Header />
@@ -63,6 +67,7 @@ export default function Home() {
       </main>
       <Footer />
       <CaseFileController projects={featured.map((p) => ({ ...p, imageSrc: publicAsset(p.image) }))} />
+      <Terminal resumeHref={publicAsset(profile.links.resume) ?? null} />
       <PageMotion />
     </>
   );

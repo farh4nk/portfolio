@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { HackathonEntry } from "@/content/projects";
 import { hackathons } from "@/content/projects";
 import { openCaseFile } from "@/lib/casefile";
+import { HACKATHON_OPEN } from "@/lib/events";
 import { Chip } from "../ui/Chip";
 
 const pad = (n: number) => String(n).padStart(2, "0");
@@ -102,8 +103,15 @@ export function HackathonRun() {
   const [openOrder, setOpenOrder] = useState<number | null>(null);
   const openEntry = hackathons.find((h) => h.order === openOrder);
 
+  // The terminal's `open <project>` expands an entry from outside.
+  useEffect(() => {
+    const onOpen = (e: Event) => setOpenOrder((e as CustomEvent<number>).detail);
+    window.addEventListener(HACKATHON_OPEN, onOpen);
+    return () => window.removeEventListener(HACKATHON_OPEN, onOpen);
+  }, []);
+
   return (
-    <div className="mt-20">
+    <div id="hackathons" className="mt-20 scroll-mt-24">
       <p className="label-mono mb-8">
         <span className="text-accent">{"// "}</span>
         <span data-scramble>fall &apos;25 hackathon run</span>

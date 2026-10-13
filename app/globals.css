@@ -171,6 +171,22 @@ html[data-highlighting] [data-project]:not([data-lit]) {
   }
 }
 
+/* Boot intro: only exists while html.booting is set by the pre-paint script */
+.boot-intro {
+  display: none;
+}
+html.booting .boot-intro {
+  display: block;
+}
+html.booting {
+  overflow: hidden;
+}
+
+/* The terminal's block cursor is its focus indicator */
+.terminal-input:focus-visible {
+  outline: none;
+}
+
 /* SplitText word masks clip at the line box; give descenders (g, y) room without shifting layout. */
 .split-word-mask {
   padding-bottom: 0.15em;

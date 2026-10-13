@@ -1,5 +1,6 @@
 "use client";
 
+import { whenBooted } from "@/lib/events";
 import { gsap, MOTION_OK, SCRAMBLE_CHARS, ScrollTrigger, SplitText, useGSAP } from "@/lib/gsap";
 
 /**
@@ -22,8 +23,11 @@ export function PageMotion() {
         {
           start: "top 90%",
           once: true,
+          // Anything in view at load waits for the boot intro, so it isn't revealed under the overlay.
           onEnter: (batch) =>
-            gsap.to(batch, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out", stagger: 0.08, overwrite: true }),
+            whenBooted(() =>
+              gsap.to(batch, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out", stagger: 0.08, overwrite: true }),
+            ),
         },
       );
 
@@ -62,15 +66,16 @@ export function PageMotion() {
           v.toLocaleString("en-US", { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
         const state = { v: 0 };
         el.textContent = format(0);
-        gsap.to(state, {
+        const count = gsap.to(state, {
           v: target,
           duration: 1.6,
           ease: "power2.out",
+          paused: true,
           onUpdate: () => {
             el.textContent = format(state.v);
           },
-          scrollTrigger: { trigger: el, start: "top 90%", once: true },
         });
+        ScrollTrigger.create({ trigger: el, start: "top 90%", once: true, onEnter: () => whenBooted(() => count.play()) });
         return () => {
           el.textContent = format(target);
         };

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { whenBooted } from "@/lib/events";
 
 const TYPE_MS = 55;
 const DELETE_MS = 35;
@@ -41,8 +42,13 @@ export function TypedRoles({ roles }: { roles: readonly string[] }) {
       timer = window.setTimeout(step, delay);
     };
 
-    timer = window.setTimeout(step, START_DELAY_MS);
-    return () => window.clearTimeout(timer);
+    const cancelBoot = whenBooted(() => {
+      timer = window.setTimeout(step, START_DELAY_MS);
+    });
+    return () => {
+      cancelBoot();
+      window.clearTimeout(timer);
+    };
   }, [roles]);
 
   return (

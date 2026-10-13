@@ -34,12 +34,15 @@ export const viewport: Viewport = {
   themeColor: "#070b14",
 };
 
-// Runs before paint: applies the saved theme and marks JS as available,
-// so animated content is only hidden when the animation code can reveal it.
+// Runs before paint: applies the saved theme, marks JS as available (so animated content is only
+// hidden when the animation code can reveal it), and decides whether the boot intro plays.
 const bootScript = `(function(d){
   d.classList.add('js');
   try { var t = localStorage.getItem('theme'); if (t === 'light' || t === 'dark') d.setAttribute('data-theme', t); } catch (e) {}
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('motion-reduced');
+  else { try { if (!sessionStorage.getItem('booted')) d.classList.add('booting'); } catch (e) {} }
+  // Failsafe: if the app hasn't started the intro within 2.5s (slow or failed JS), drop it.
+  setTimeout(function () { if (!window.__bootStarted) d.classList.remove('booting'); }, 2500);
 })(document.documentElement);`;
 
 const personJsonLd = {

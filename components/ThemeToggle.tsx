@@ -1,20 +1,13 @@
 "use client";
 
-export function ThemeToggle() {
-  function toggle() {
-    const root = document.documentElement;
-    const next = root.getAttribute("data-theme") === "light" ? "dark" : "light";
-    root.setAttribute("data-theme", next);
-    try {
-      localStorage.setItem("theme", next);
-    } catch {}
-  }
+import { currentTheme, setTheme } from "@/lib/theme";
 
+export function ThemeToggle() {
   // Both icons render; CSS shows the right one, so server and client markup match.
   return (
     <button
       type="button"
-      onClick={toggle}
+      onClick={() => setTheme(currentTheme() === "light" ? "dark" : "light")}
       aria-label="Toggle light and dark theme"
       className="label-mono grid h-8 w-8 place-items-center rounded-md border border-rule hover:border-accent hover:text-accent"
     >

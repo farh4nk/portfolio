@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { whenBooted } from "@/lib/events";
 import { gsap, MOTION_OK, useGSAP } from "@/lib/gsap";
 import { scrollToElement } from "@/lib/scroll";
 import { type Layout, NODE_SIZE, nodes, type SchematicNode, VIEWBOX } from "./schematic-graph";
@@ -52,7 +53,8 @@ export function Schematic() {
         const boxes = gsap.utils.toArray<SVGGElement>("[data-node]", svg);
 
         // Wires draw in, then nodes pop. Starts after the hero copy has landed.
-        const intro = gsap.timeline({ delay: 0.9 });
+        const intro = gsap.timeline({ delay: 0.9, paused: true });
+        const cancelBoot = whenBooted(() => intro.play());
         intro
           .from(boxes, { opacity: 0, scale: 0.85, transformOrigin: "50% 50%", duration: 0.4, stagger: 0.05, ease: "back.out(2)" })
           .from(wires, { drawSVG: "0%", duration: 0.5, stagger: 0.07, ease: "power2.inOut" }, 0.15);
@@ -93,10 +95,12 @@ export function Schematic() {
           el.addEventListener("pointermove", move);
           el.addEventListener("pointerleave", reset);
           return () => {
+            cancelBoot();
             el.removeEventListener("pointermove", move);
             el.removeEventListener("pointerleave", reset);
           };
         }
+        return cancelBoot;
       });
     },
     { scope: figure },

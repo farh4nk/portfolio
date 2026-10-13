@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { openTerminal } from "@/lib/events";
 import { gsap, MOTION_OK, ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { ThemeToggle } from "./ThemeToggle";
 
@@ -79,6 +80,8 @@ export function Header() {
           <button
             type="button"
             aria-label="Open terminal"
+            aria-keyshortcuts="` Control+K Meta+K"
+            onClick={openTerminal}
             className="label-mono grid h-8 w-8 place-items-center rounded-md border border-rule text-term hover:border-term"
           >
             &gt;_
