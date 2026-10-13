@@ -122,27 +122,6 @@ html.js:not(.motion-reduced) [data-hero-item] {
   visibility: hidden;
 }
 
-/* Schematic: active node, and the project highlight it drives across the page */
-[data-node] rect {
-  transition: stroke 0.2s ease;
-}
-[data-node][data-active] rect {
-  stroke: var(--accent);
-}
-[data-project] {
-  transition:
-    filter 0.3s ease,
-    box-shadow 0.3s ease;
-}
-html[data-highlighting] [data-project]:not([data-lit]) {
-  filter: grayscale(1) opacity(0.35);
-}
-[data-project][data-lit] {
-  box-shadow:
-    0 0 0 1px var(--accent),
-    0 0 28px -8px var(--accent);
-}
-
 /* Winner star: slow wobble with a glow */
 @keyframes star-wobble {
   0%,

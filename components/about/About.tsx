@@ -1,33 +1,12 @@
 import { profile } from "@/content/profile";
-import { publicAsset } from "@/lib/assets";
 import { Chip } from "../ui/Chip";
-import { CornerMarks } from "../ui/CornerMarks";
-import { MediaFrame } from "../ui/MediaFrame";
-import { PerceptionPortrait } from "./PerceptionPortrait";
 
-// The portrait carries a perception overlay (scan line, landmarks, bounding box), a nod to MIRA and the dlib work.
+// Bio and education on the left; leadership and honors in a side column on wide screens.
 export function About() {
   const { education } = profile;
 
   return (
-    <div className="grid gap-12 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
-      <div data-reveal className="relative mx-auto w-full max-w-sm md:mx-0 md:max-w-none">
-        <CornerMarks />
-        <PerceptionPortrait label="farhan · 0.99">
-          <MediaFrame
-            src={publicAsset(profile.portrait)}
-            alt={`Portrait of ${profile.name}`}
-            pending="portrait.jpg"
-            sizes="(min-width: 768px) 40vw, 384px"
-            className="aspect-[4/5] rounded-md border border-rule"
-          />
-        </PerceptionPortrait>
-        <p className="label-mono mt-3 flex justify-between">
-          <span>fig. 04 — {profile.location.toLowerCase()}</span>
-          <span className="text-term">face detected · 1</span>
-        </p>
-      </div>
-
+    <div className="grid gap-12 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:gap-16">
       <div className="space-y-10">
         <div data-reveal className="space-y-4 text-lg leading-relaxed">
           {profile.bio.map((p) => (
@@ -54,31 +33,31 @@ export function About() {
             ))}
           </ul>
         </div>
-
-        <div data-reveal className="grid gap-10 sm:grid-cols-2">
-          <div>
-            <p className="label-mono mb-3">leadership</p>
-            <ul className="space-y-3">
-              {profile.leadership.map((l) => (
-                <li key={l.org}>
-                  <p className="font-medium">{l.role}</p>
-                  <p className="text-sm text-ink-muted">{l.org}</p>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <p className="label-mono mb-3">honors</p>
-            <ul className="flex flex-col items-start gap-2">
-              {profile.awards.map((a) => (
-                <li key={a}>
-                  <Chip tone="signal">★ {a}</Chip>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
       </div>
+
+      <aside data-reveal className="grid gap-10 sm:grid-cols-2 lg:grid-cols-1 lg:content-start">
+        <div>
+          <p className="label-mono mb-3">leadership</p>
+          <ul className="space-y-3">
+            {profile.leadership.map((l) => (
+              <li key={l.org}>
+                <p className="font-medium">{l.role}</p>
+                <p className="text-sm text-ink-muted">{l.org}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <p className="label-mono mb-3">honors</p>
+          <ul className="flex flex-col items-start gap-2">
+            {profile.awards.map((a) => (
+              <li key={a}>
+                <Chip tone="signal">★ {a}</Chip>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </aside>
     </div>
   );
 }

@@ -4,7 +4,8 @@ import { useRef } from "react";
 import { gsap, MOTION_OK, ScrollTrigger, useGSAP } from "@/lib/gsap";
 
 // The "pen" sits 60% down the viewport: the wire tip, node lighting and log typing all key off that line.
-const PEN = "top 60%";
+// Node centers sit 13.5px below each role's top, hence the +=13.
+const PEN = "top+=13 60%";
 
 export function TimelineMotion({ children }: { children: React.ReactNode }) {
   const scope = useRef<HTMLDivElement>(null);
@@ -13,14 +14,22 @@ export function TimelineMotion({ children }: { children: React.ReactNode }) {
     () => {
       const mm = gsap.matchMedia();
       mm.add(MOTION_OK, () => {
-        const list = scope.current!.querySelector("ol")!;
-        const wire = scope.current!.querySelector("[data-wire-progress]");
+        const roles = gsap.utils.toArray<HTMLElement>("[data-role]", scope.current);
+        const segments = gsap.utils.toArray<HTMLElement>("[data-wire-segment]", scope.current);
 
-        gsap.fromTo(
-          wire,
-          { scaleY: 0 },
-          { scaleY: 1, ease: "none", scrollTrigger: { trigger: list, start: PEN, end: "bottom 60%", scrub: true } },
-        );
+        // One scrubbed timeline across all segments, each lasting its own height, so the tip moves at
+        // scroll speed from the first dot to the last.
+        gsap.set(segments, { scaleY: 0 });
+        const wire = gsap.timeline({
+          scrollTrigger: {
+            trigger: roles[0],
+            start: PEN,
+            end: () => `+=${roles[roles.length - 1].offsetTop - roles[0].offsetTop}`,
+            scrub: true,
+            invalidateOnRefresh: true,
+          },
+        });
+        for (const seg of segments) wire.to(seg, { scaleY: 1, ease: "none", duration: seg.offsetHeight });
 
         for (const role of gsap.utils.toArray<HTMLElement>("[data-role]", scope.current)) {
           const node = role.querySelector("[data-node]");

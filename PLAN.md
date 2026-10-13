@@ -8,7 +8,7 @@
 |---|---|
 | Look | Blueprint lab mixed with dark terminal (dark by default, light "blueprint paper" toggle) |
 | Type | Technical: Space Grotesk headings, Inter body, JetBrains Mono for labels and the terminal |
-| Hero | Live system schematic, plus the name sliding up and the typing role line |
+| Hero | Headshot top-right beside the name (badge above the kicker on phones), plus the name sliding up and the typing role line. The hero schematic was removed on 2026-10-13; the schematic lives on only in the pinned Stack scene |
 | Format | Single long page with anchor nav |
 | Projects | Bento grid; each card expands into a full-screen "case file" (GSAP Flip) |
 | Experience | Scroll-drawn circuit timeline |
@@ -73,14 +73,13 @@
 ├─ ━━━━━━━━ scroll progress hairline (cyan) ━━━━━━━━━━━━━━━━━━━━━━━┤
 │                                                                   │
 │  HERO        name + typing role + tagline + CTAs │ live schematic │
-│  STATS       3.99 GPA · 14k+ pageviews · 5 hackathons/2 wins · 1 of 9
 │  MARQUEE     PYTHON · TYPESCRIPT · FASTAPI · PYTORCH · SUPABASE ···
 │  01 WORK     3 featured cards (Quenova, MIRA ★, Brain Inv ★)      │
 │              → full-screen case files                             │
 │              + "Fall '25 hackathon run" strip (5 events)          │
 │  02 EXPER.   scroll-drawn circuit timeline (4 roles)              │
 │  03 STACK    PINNED scene: schematic zooms node by node           │
-│  04 ABOUT    perception-overlay portrait + bio + education + honors
+│  04 ABOUT    bio + education + leadership + honors (no portrait)    
 │  05 CONTACT  "Let's build something." + copy-email + links        │
 │  FOOTER      live NYC clock                                       │
 └───────────────────────────────────────────────────────────────────┘
@@ -145,9 +144,8 @@
   - The grid behind it tilts subtly with the mouse (a few px, desktop only).
   - Mobile: the schematic stacks vertically below the text, with slower pulses and tap-to-highlight.
 
-### Stats strip and marquee
-- Numbers count up when they enter view: `3.99` GPA · `14,000+` Quenova pageviews · `5` hackathons / `2` wins · `1 of 9` Cornell Tech researchers.
-- Below that, an infinite mono marquee of your stack. Its speed and skew react to scroll velocity: scrolling faster makes it run faster and lean further.
+### Marquee
+- (The stats strip was removed on 2026-10-13.) Directly under the hero, an infinite mono marquee of your stack. Its speed and skew react to scroll velocity: scrolling faster makes it run faster and lean further.
 
 ### 01 Work: featured case files and the hackathon run
 **Emphasis rule:** Quenova (production, real traction) and the two winners (MIRA, Brain Invaders) are the only full case-study cards. The other three hackathon builds (reciPal, LUNA, NutriScope) live inside the hackathon-run strip as compact entries.
@@ -156,11 +154,11 @@
 - **Layout (desktop):**
   ```
   ┌───────────────────────────┬─────────────┐
-  │ QUENOVA (2×1)             │ MIRA ★      │
-  │ live · 14k pageviews      │ (1×2)       │
-  ├───────────────────────────┤ SBUHacks    │
-  │ BRAIN INVADERS ★ (2×1)    │ EquiTech    │
-  │ HackRPI · Best First-Time │ winner      │
+  │ QUENOVA (2×1)             │ BRAIN       │
+  │ live · 14k pageviews      │ INVADERS ★  │
+  ├───────────────────────────┤ (1×2)       │
+  │ MIRA ★ (2×1)              │ HackRPI ·   │
+  │ SBUHacks · EquiTech winner│ First-Time  │
   └───────────────────────────┴─────────────┘
   ```
   On tablet it becomes 2 columns, and on mobile a single column.
@@ -174,7 +172,7 @@
   - Media: a screenshot gallery plus the demo video. Use a click-to-play facade (thumbnail first, the iframe loads only when clicked) so YouTube doesn't slow the page.
 - The URL updates to `#work/mira`, so case files can be linked directly and the browser Back button closes them. Esc closes too. Focus is trapped inside while open, and the page scroll locks.
 
-**B. Fall '25 hackathon run (5 events, in order)**
+**B. Hackathon timeline (all events, in order; was the "Fall '25 hackathon run" until 2026-10-13)**
 - A horizontal wire draws left to right as the strip scrolls into view, and each event pops in as a node.
   - **Winning nodes are large `★` nodes.** When the wire reaches one, it flashes with a small `--signal` particle burst, and clicking it opens that project's case file.
   - **Other nodes are small `●` dots.** Clicking one expands a compact panel under the strip with a one-line pitch, 2–3 bullets, stack chips and links. There is no full case file and no screenshot gallery.
@@ -185,7 +183,8 @@
    03 ●── Hack Knight ────── NutriScope
    04 ★── SBUHacks ───────── MIRA            EquiTech Track winner
    05 ★── HackRPI ────────── Brain Invaders  Best First-Time Hack
-         5 hackathons · 1 semester · 2 wins
+   06 ★── Hack Knight '26 ── Cribby          Best Use of Presage
+         6 hackathons · 3 wins (counted from the data)
   ```
 
 #### Project content sheet (checked against Devpost, the repos and the demos)
@@ -224,6 +223,14 @@
 - *Links:* [GitHub](https://github.com/deyan-reza/BrainInvaders) · [Demo](https://www.youtube.com/watch?v=Cld4ErQqrNc) · [Devpost](https://devpost.com/software/space-invaders-impulse-control-trainer)
 - *Case-file touch:* a playable 10-second "don't shoot yet" timing mini-game that reports your reaction time
 
+**Cribby** · Hack Knight Fall 2026 · ★ Winner, Best Use of Presage · team of 4 (added 2026-10-13)
+- *Tagline:* A baby monitor that also reads vitals: Presage estimates breathing and heart rate from the nursery camera, so nothing touches the baby.
+- *Stack (checked against the repo):* Python, FastAPI, C++ (Presage bridge), Presage SmartSpectra, OpenCV, Raspberry Pi, Next.js, Tailwind, WebSockets, Tiger Data, Gemini, Docker, Tailscale. ElevenLabs is tagged on Devpost but was dropped during the build, so it's left out.
+- *My part (his Devpost words):* connections between the hardware and software, the Presage integration, and general frontend work.
+- *Caveat shown in the case file:* informational wellness monitor, not a medical device; only tested on adults so far.
+- *Links:* [GitHub](https://github.com/farh4nk/cribby) · [Demo](https://www.youtube.com/watch?v=eI_JGgeIOac) · [Devpost](https://devpost.com/software/cribby)
+- *Bento slot:* full-width banner under the other three cards.
+
 *Hackathon run: compact panels only*
 
 **reciPal** · BYTE Hacks 2025 · team of 5
@@ -249,7 +256,7 @@
 - *Bullets:*
   - A photo of a meal identifies the food, and the app tracks daily food-group coverage.
   - A Gemini-powered chatbot answers questions with context about what you've eaten.
-- *Stack:* Gemini (plus whatever else was used; not confirmed)
+- *Stack:* FastAPI, PyTorch, Gemini, Docker (confirmed by Farhan on 2026-10-13; no public repo)
 - *Links:* [Presentation](https://gamma.app/docs/NutriScope-98lzn02epr1076r?mode=doc)
 
 ### 02 Experience: circuit timeline
@@ -274,7 +281,7 @@
 - **Below 768px the pin is turned off** and the section becomes six stacked cards, because pinning is unreliable on mobile.
 
 ### 04 About
-- **Perception portrait:** your photo enters with a scan line sweeping down. Landmark dots plot onto the face, and a bounding box snaps in labeled `farhan · 0.99`. The overlay then fades to about 30% and stays as a subtle detail. This nods to MIRA and the dlib face recognition work.
+- **No portrait in About** (changed 2026-10-13). The perception overlay now runs on the hero headshot after the boot intro: a scan line sweeps down, landmark dots plot onto the face, a bounding box snaps in labeled `farhan · 0.99`, and a few seconds later the whole overlay fades away completely.
 - Bio: written by Farhan himself (`profile.bio`). Claude leaves placeholders and never drafts personal copy.
 - **Education card:** CCNY, Macaulay Honors · B.S. Computer Science · May 2028 · GPA 3.99 · Dean's List · S Jay Levy Fellow. Coursework appears as mono chips.
 - **Leadership:** MHC++ Vice President · HackMHC++ founding organizer and host · MSO.
@@ -313,14 +320,14 @@ app/
   globals.css         tokens, grid background, base styles
 components/
   BootIntro.tsx  Header.tsx  ScrollProgress.tsx  SmoothScroll.tsx
-  hero/       Hero.tsx  Schematic.tsx  schematic-graph.ts (nodes, edges, project map)
+  hero/       Hero.tsx  HeroIntro.tsx  TypedRoles.tsx  PerceptionPortrait.tsx
   work/       BentoGrid.tsx  ProjectCard.tsx  CaseFile.tsx
   experience/ CircuitTimeline.tsx
   stack/      StackExplorer.tsx
-  about/      About.tsx  PerceptionPortrait.tsx
+  about/      About.tsx
   contact/    Contact.tsx  Footer.tsx
   terminal/   Terminal.tsx  commands.ts
-  ui/         SectionLabel.tsx (scramble)  CountUp.tsx  Marquee.tsx  Chip.tsx
+  ui/         SectionLabel.tsx (scramble)  Marquee.tsx  Chip.tsx
 lib/
   gsap.ts     registers plugins once
 content/      ← ALL copy lives here; edit text without touching components

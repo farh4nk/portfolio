@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import { whenBooted } from "@/lib/events";
 import { gsap, MOTION_OK, useGSAP } from "@/lib/gsap";
 
 // Face-landmark overlay in a 400×500 box (the portrait's 4:5 frame), in the spirit of dlib's 68-point model.
@@ -18,7 +19,7 @@ const ellipse = (cx: number, cy: number, rx: number, ry: number, from: number, t
 const { x: cx, y: cy } = CENTER;
 const s = SCALE;
 const landmarks: P[] = [
-  ...ellipse(cx, cy, 72 * s, 98 * s, 0.04 * Math.PI, 0.96 * Math.PI, 17), // jaw
+  ...ellipse(cx, cy, 82 * s, 120 * s, 0.04 * Math.PI, 0.96 * Math.PI, 17), // jaw
   ...ellipse(cx - 32 * s, cy - 32 * s, 22 * s, 8 * s, 1.1 * Math.PI, 1.9 * Math.PI, 5), // left brow
   ...ellipse(cx + 32 * s, cy - 32 * s, 22 * s, 8 * s, 1.1 * Math.PI, 1.9 * Math.PI, 5), // right brow
   ...Array.from({ length: 4 }, (_, i): P => [cx, cy - 18 * s + i * 13 * s]), // nose bridge
@@ -27,9 +28,14 @@ const landmarks: P[] = [
   ...ellipse(cx + 30 * s, cy - 12 * s, 14 * s, 6 * s, 0, 2 * Math.PI, 7).slice(0, 6), // right eye
   ...ellipse(cx, cy + 62 * s, 28 * s, 10 * s, 0, 2 * Math.PI, 13).slice(0, 12), // mouth
 ];
-const box = { x: cx - 92 * s, y: cy - 110 * s, w: 184 * s, h: 228 * s };
+const box = { x: cx - 100 * s, y: cy - 128 * s, w: 200 * s, h: 272 * s };
 const bracket = 18;
 
+/**
+ * Wraps the hero headshot. After the boot intro, a scan line sweeps down, landmarks plot onto the face,
+ * a bounding box snaps on with its label, and then the whole overlay fades away. It's hidden by default,
+ * so it never shows under reduced motion or without JS.
+ */
 export function PerceptionPortrait({ children, label }: { children: React.ReactNode; label: string }) {
   const scope = useRef<HTMLDivElement>(null);
 
@@ -42,14 +48,23 @@ export function PerceptionPortrait({ children, label }: { children: React.ReactN
         gsap.set(q("[data-dot]"), { scale: 0, transformOrigin: "50% 50%" });
         gsap.set(q("[data-bbox], [data-bbox-label]"), { opacity: 0 });
 
-        gsap
-          .timeline({ scrollTrigger: { trigger: scope.current, start: "top 70%", once: true } })
-          .fromTo(q("[data-scan]"), { yPercent: -100, opacity: 1 }, { yPercent: 1000, duration: 1.2, ease: "power1.inOut" })
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo(q("[data-scan]"), { yPercent: -100, opacity: 1 }, { yPercent: 1000, duration: 1.2, ease: "power1.inOut" })
           .to(q("[data-scan]"), { opacity: 0, duration: 0.2 })
           .to(q("[data-dot]"), { scale: 1, duration: 0.25, ease: "back.out(3)", stagger: { each: 0.012, from: "random" } }, 0.4)
           .fromTo(q("[data-bbox]"), { opacity: 0, scale: 1.25, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)" }, ">-0.1")
           .to(q("[data-bbox-label]"), { opacity: 1, duration: 0.2 }, "<0.15")
-          .to(q("[data-overlay]"), { opacity: 0.3, duration: 1, ease: "power2.out" }, "+=0.8");
+          .to(q("[data-overlay]"), { opacity: 0, duration: 0.9, ease: "power2.inOut" }, "+=2.2");
+
+        // Start once the headshot has faded in with the rest of the hero.
+        let start: gsap.core.Tween | undefined;
+        const cancelBoot = whenBooted(() => {
+          start = gsap.delayedCall(1, () => tl.play());
+        });
+        return () => {
+          cancelBoot();
+          start?.kill();
+        };
       });
     },
     { scope },
@@ -60,7 +75,7 @@ export function PerceptionPortrait({ children, label }: { children: React.ReactN
       {children}
       <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden rounded-md">
         <span data-scan className="absolute inset-x-0 top-0 h-[10%] bg-gradient-to-b from-transparent to-term/40 opacity-0" />
-        <svg data-overlay viewBox="0 0 400 500" preserveAspectRatio="none" className="absolute inset-0 h-full w-full opacity-30">
+        <svg data-overlay viewBox="0 0 400 500" preserveAspectRatio="none" className="absolute inset-0 h-full w-full opacity-0">
           <g fill="var(--term)">
             {landmarks.map(([x, y], i) => (
               <circle key={i} data-dot cx={x.toFixed(1)} cy={y.toFixed(1)} r="2.2" />

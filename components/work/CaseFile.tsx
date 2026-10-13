@@ -195,6 +195,12 @@ function CaseFile({
               </p>
             )}
             <p className="mt-6 max-w-3xl text-lg text-ink-muted">{project.tagline}</p>
+            {project.role && (
+              <p className="mt-4 max-w-3xl">
+                <span className="label-mono mr-2 text-accent">my part</span>
+                {project.role}
+              </p>
+            )}
             <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2">
               {project.links.map((l) => (
                 <li key={l.href}>
@@ -228,6 +234,7 @@ function CaseFile({
                   </li>
                 ))}
               </ul>
+              {project.note && <p className="label-mono mt-6 normal-case">* {project.note}</p>}
             </section>
             <aside data-cf-in className="space-y-8">
               {(project.metric || project.award) && (
@@ -256,6 +263,7 @@ function CaseFile({
               src={project.imageSrc}
               alt={`${project.name} screenshot`}
               pending={project.image.split("/").pop()!}
+              focus={project.imageFocus}
               sizes="(min-width: 1024px) 50vw, 100vw"
               className="aspect-video rounded-md border border-rule"
             />

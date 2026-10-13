@@ -2,22 +2,24 @@ import { experience } from "@/content/experience";
 import { TimelineMotion } from "./TimelineMotion";
 
 // Circuit timeline. TimelineMotion draws the wire with scroll and lights each node as the wire reaches it.
+// The wire is one segment per gap between nodes, so it starts and ends exactly at a dot.
 export function CircuitTimeline() {
   return (
     <TimelineMotion>
       <ol className="relative">
-        <span aria-hidden className="absolute top-2 bottom-2 left-[7px] w-px bg-rule md:left-[calc(11rem+7px)]" />
-        <span
-          aria-hidden
-          data-wire-progress
-          className="absolute top-2 bottom-2 left-[7px] w-px origin-top bg-accent md:left-[calc(11rem+7px)]"
-        />
         {experience.map((r, i) => (
           <li key={r.org} data-role className="relative grid gap-x-8 pb-14 pl-10 last:pb-0 md:grid-cols-[11rem_1fr] md:pl-0">
             <p data-role-dates className="label-mono pt-1 md:pr-10 md:text-right">
               {r.dates}
             </p>
-            <span aria-hidden className="absolute top-1.5 left-0 h-[15px] w-[15px] md:left-[11rem]">
+            {/* Wire from this node's center to the next node's center; the last role has none, so the
+                line ends at its dot. Node centers sit 13.5px below each row's top. */}
+            {i < experience.length - 1 && (
+              <span aria-hidden className="absolute top-[13.5px] -bottom-[13.5px] left-[7px] w-px bg-rule md:left-[calc(11rem+7px)]">
+                <span data-wire-segment className="absolute inset-0 origin-top bg-accent" />
+              </span>
+            )}
+            <span aria-hidden className="absolute top-1.5 left-0 z-10 h-[15px] w-[15px] md:left-[11rem]">
               <span data-node-ring className="absolute inset-0 rounded-full border border-accent opacity-0" />
               <span
                 data-node
@@ -29,7 +31,7 @@ export function CircuitTimeline() {
                 />
               </span>
             </span>
-            <div data-project={r.slug} className="-m-3 rounded-md p-3 md:ml-7 md:pl-3">
+            <div className="md:pl-10">
               <h3 className="mt-1 font-display text-xl font-bold sm:text-2xl md:mt-0">{r.title}</h3>
               <p className="mt-1 text-accent">
                 {r.org}

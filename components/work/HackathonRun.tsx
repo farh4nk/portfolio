@@ -8,13 +8,14 @@ import { HACKATHON_OPEN } from "@/lib/events";
 import { Chip } from "../ui/Chip";
 
 const pad = (n: number) => String(n).padStart(2, "0");
+const wins = hackathons.filter((h) => h.award).length;
 const panelId = (h: HackathonEntry, where: "row" | "strip") => `hack-${h.order}-${where}`;
 
 function Panel({ entry, id }: { entry: HackathonEntry; id: string }) {
   return (
     <div id={id} className="rounded-md border border-rule bg-bg-raised p-5">
       <p className="label-mono">
-        {entry.event} · {entry.project}
+        {entry.event} {entry.term} · {entry.project}
       </p>
       <p className="mt-2 font-display text-lg font-medium">{entry.pitch}</p>
       <ul className="mt-3 space-y-1.5 text-sm text-ink-muted">
@@ -63,14 +64,17 @@ function Node({ entry, open, onToggle }: { entry: HackathonEntry; open: boolean;
       </span>
       <span className="min-w-0 text-left lg:text-center">
         <span className="label-mono block">
-          {pad(entry.order)} · {entry.event}
+          {pad(entry.order)} · {entry.term}
         </span>
+        <span className="label-mono block text-ink">{entry.event}</span>
         <span className={`block font-display text-lg font-medium ${winner ? "text-ink" : ""}`}>{entry.project}</span>
         {entry.award && <span className="label-mono block normal-case text-signal">{entry.award}</span>}
       </span>
     </>
   );
-  const cls = "flex w-full items-center gap-4 rounded-md p-2 hover:bg-bg-raised lg:flex-col lg:gap-3";
+  // Hover draws the same blue outline as keyboard focus, instead of filling the node.
+  const cls =
+    "flex w-full items-center gap-4 rounded-md p-2 outline-2 outline-offset-3 outline-transparent transition-[outline-color] duration-200 hover:outline-accent lg:flex-col lg:gap-3";
 
   // Winners open their case file, morphing out of this node. Others expand a compact panel.
   if (entry.featuredSlug) {
@@ -114,11 +118,11 @@ export function HackathonRun() {
     <div id="hackathons" className="mt-20 scroll-mt-24">
       <p className="label-mono mb-8">
         <span className="text-accent">{"// "}</span>
-        <span data-scramble>fall &apos;25 hackathon run</span>
+        <span data-scramble>hackathon timeline</span>
       </p>
-      <ol className="relative grid gap-2 lg:grid-cols-5 lg:gap-4">
+      <ol className="relative grid gap-2 lg:grid-cols-6 lg:gap-4">
         {/* The wire: vertical on mobile, horizontal through the node centers on desktop. */}
-        <span aria-hidden className="absolute top-3 bottom-3 left-[1.25rem] w-px bg-accent/50 lg:top-[1.75rem] lg:right-[10%] lg:bottom-auto lg:left-[10%] lg:h-px lg:w-auto" />
+        <span aria-hidden className="absolute top-3 bottom-3 left-[1.25rem] w-px bg-accent/50 lg:top-[1.75rem] lg:right-[calc(100%/12)] lg:bottom-auto lg:left-[calc(100%/12)] lg:h-px lg:w-auto" />
         {hackathons.map((h) => {
           const open = openOrder === h.order;
           return (
@@ -140,7 +144,9 @@ export function HackathonRun() {
           <Panel entry={openEntry} id={panelId(openEntry, "strip")} />
         </div>
       )}
-      <p data-reveal className="label-mono mt-8 text-center">5 hackathons · 1 semester · 2 wins</p>
+      <p data-reveal className="label-mono mt-8 text-center">
+        {hackathons.length} hackathons · {wins} wins
+      </p>
     </div>
   );
 }

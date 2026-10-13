@@ -12,7 +12,6 @@ import { StackExplorer } from "@/components/stack/StackExplorer";
 import { Terminal } from "@/components/terminal/Terminal";
 import { Marquee } from "@/components/ui/Marquee";
 import { SectionLabel } from "@/components/ui/SectionLabel";
-import { Stats } from "@/components/ui/Stats";
 import { BentoGrid } from "@/components/work/BentoGrid";
 import { CaseFileController } from "@/components/work/CaseFile";
 import { HackathonRun } from "@/components/work/HackathonRun";
@@ -33,14 +32,11 @@ export default function Home() {
       <main id="top">
         <div className={container}>
           <Hero />
-          <Stats />
         </div>
-        <div className="mt-16">
-          <Marquee />
-        </div>
+        <Marquee />
 
         <section id="work" className={section}>
-          <SectionLabel index={1} label="work" title="Selected work" annotation="← 3 of 6 builds" />
+          <SectionLabel index={1} label="work" title="Featured Projects" />
           <BentoGrid />
           <HackathonRun />
         </section>
@@ -51,7 +47,7 @@ export default function Home() {
         </section>
 
         <section id="stack" className={section}>
-          <SectionLabel index={3} label="stack" title="Toolbox" />
+          <SectionLabel index={3} label="stack" title="Skills" />
           <StackExplorer />
         </section>
 

@@ -3,9 +3,9 @@
 import { useRef } from "react";
 import { skills } from "@/content/skills";
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
-import { frameNodes, nodes } from "../hero/schematic-graph";
-import { SchematicSvg } from "../hero/SchematicSvg";
 import { Chip } from "../ui/Chip";
+import { frameNodes, nodes } from "./schematic-graph";
+import { SchematicSvg } from "./SchematicSvg";
 
 const pad = (n: number) => String(n).padStart(2, "0");
 const frames = skills.map((g) => frameNodes(nodes.filter((n) => n.groups.includes(g.id)).map((n) => n.id)));
@@ -84,7 +84,7 @@ export function StackScene() {
               / {pad(skills.length)}
             </span>
           </figcaption>
-          <SchematicSvg layout="wide" aria-hidden className="[&_[data-node]]:transition-opacity [&_[data-node]]:duration-500 [&_rect]:transition-[stroke]" />
+          <SchematicSvg aria-hidden className="[&_[data-node]]:transition-opacity [&_[data-node]]:duration-500 [&_rect]:transition-[stroke]" />
         </figure>
         <div className="relative min-h-72">
           {skills.map((g, i) => (

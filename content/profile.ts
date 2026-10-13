@@ -20,12 +20,6 @@ export const profile = {
     linkedin: "https://linkedin.com/in/farhank0127",
     resume: "/resume.pdf",
   },
-  stats: [
-    { value: 3.99, decimals: 2, suffix: "", label: "GPA" },
-    { value: 14000, decimals: 0, suffix: "+", label: "Quenova pageviews" },
-    { value: 5, decimals: 0, suffix: "", label: "hackathons · 2 wins" },
-    { value: 1, decimals: 0, suffix: " of 9", label: "Cornell Tech researchers" },
-  ],
   education: {
     school: "CUNY City College — Macaulay Honors College",
     degree: "B.S. Computer Science",
@@ -48,6 +42,7 @@ export const profile = {
     { role: "Member", org: "Muslim Students Organization" },
   ],
   awards: [
+    "Hack Knight Fall 2026 · Best Use of Presage",
     "SBUHacks 2025 · Winner, EquiTech Track",
     "HackRPI 2025 · Best First-Time Hack",
     "CodePath · Web102 Honors",

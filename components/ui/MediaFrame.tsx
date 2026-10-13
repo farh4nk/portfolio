@@ -8,6 +8,7 @@ export function MediaFrame({
   sizes,
   className = "",
   imageClassName = "",
+  focus = "top",
 }: {
   src?: string;
   alt: string;
@@ -15,11 +16,12 @@ export function MediaFrame({
   sizes: string;
   className?: string;
   imageClassName?: string;
+  focus?: "top" | "center";
 }) {
   return (
     <div className={`relative overflow-hidden bg-bg ${className}`}>
       {src ? (
-        <Image src={src} alt={alt} fill sizes={sizes} className={`object-cover object-top ${imageClassName}`} />
+        <Image src={src} alt={alt} fill sizes={sizes} className={`object-cover ${focus === "center" ? "object-center" : "object-top"} ${imageClassName}`} />
       ) : (
         <div className="absolute inset-0 grid place-items-center">
           <svg aria-hidden className="absolute inset-0 h-full w-full text-rule" preserveAspectRatio="none">

@@ -7,7 +7,6 @@ import { gsap, MOTION_OK, SCRAMBLE_CHARS, ScrollTrigger, SplitText, useGSAP } fr
  * Page-wide scroll motion, driven by data attributes so server components stay server components:
  *   [data-reveal]         fades up when it enters view, batched with its neighbors
  *   [data-scramble]       mono label that decodes from random characters on first view
- *   [data-count]          number that counts up from 0 (data-count = target, data-decimals)
  *   [data-split-words]    heading whose words rise out of a mask one after another
  */
 export function PageMotion() {
@@ -58,31 +57,6 @@ export function PageMotion() {
           },
         });
       }
-
-      const counters = gsap.utils.toArray<HTMLElement>("[data-count]").map((el) => {
-        const target = Number(el.dataset.count);
-        const decimals = Number(el.dataset.decimals ?? 0);
-        const format = (v: number) =>
-          v.toLocaleString("en-US", { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
-        const state = { v: 0 };
-        el.textContent = format(0);
-        const count = gsap.to(state, {
-          v: target,
-          duration: 1.6,
-          ease: "power2.out",
-          paused: true,
-          onUpdate: () => {
-            el.textContent = format(state.v);
-          },
-        });
-        ScrollTrigger.create({ trigger: el, start: "top 90%", once: true, onEnter: () => whenBooted(() => count.play()) });
-        return () => {
-          el.textContent = format(target);
-        };
-      });
-
-      // Restore real values if the media query flips to reduced motion mid-session.
-      return () => counters.forEach((restore) => restore());
     });
   });
 
