@@ -50,6 +50,11 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Lenis drives scrolling when active; native smooth scrolling would fight it. */
+html.lenis {
+  scroll-behavior: auto;
+}
+
 body {
   background-color: var(--bg);
   color: var(--ink);
@@ -100,4 +105,41 @@ body {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ink-muted);
+}
+
+/* ── Motion pre-states ───────────────────────────────────────────
+   Only hidden once JS is confirmed (html.js) and motion is allowed, so the page
+   reads fine without JavaScript and under prefers-reduced-motion. */
+html.js:not(.motion-reduced) [data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+html.js:not(.motion-reduced) [data-hero-name],
+html.js:not(.motion-reduced) [data-split-words],
+html.js:not(.motion-reduced) [data-hero-item] {
+  visibility: hidden;
+}
+
+/* SplitText word masks clip at the line box; give descenders (g, y) room without shifting layout. */
+.split-word-mask {
+  padding-bottom: 0.15em;
+  margin-bottom: -0.15em;
+}
+
+/* Blinking block cursor for typed lines */
+@keyframes caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@utility caret {
+  animation: caret-blink 1s steps(1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .caret {
+    animation: none !important;
+  }
 }

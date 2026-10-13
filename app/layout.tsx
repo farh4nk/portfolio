@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import { profile } from "@/content/profile";
+import "lenis/dist/lenis.css";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({

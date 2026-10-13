@@ -7,10 +7,13 @@ export const profile = {
     "full-stack products",
     "applied AI at the edge",
   ],
-  tagline: "I build systems that see, serve, and scale.",
-  summary:
-    "Production experience across full-stack architecture, low-latency ML pipelines, and embedded robotics.",
+  // Written by Farhan. Placeholders render until replaced.
+  tagline: "[ TODO: hero tagline ]",
+  summary: "[ TODO: hero supporting line ]",
   location: "New York, NY",
+  portrait: "/images/portrait.jpg",
+  bio: ["[ TODO: bio paragraph 1 ]", "[ TODO: bio paragraph 2 ]"],
+  contactBlurb: "[ TODO: one line about what you're open to ]",
   email: "farhank.dev@gmail.com",
   links: {
     github: "https://github.com/farh4nk",

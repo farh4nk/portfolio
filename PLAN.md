@@ -82,7 +82,7 @@
 │  03 STACK    PINNED scene: schematic zooms node by node           │
 │  04 ABOUT    perception-overlay portrait + bio + education + honors
 │  05 CONTACT  "Let's build something." + copy-email + links        │
-│  FOOTER      built with Next.js + GSAP · live NYC clock           │
+│  FOOTER      live NYC clock                                       │
 └───────────────────────────────────────────────────────────────────┘
         ` or ⌘K anywhere → TERMINAL EASTER EGG overlay
 ```
@@ -275,7 +275,7 @@
 
 ### 04 About
 - **Perception portrait:** your photo enters with a scan line sweeping down. Landmark dots plot onto the face, and a bounding box snaps in labeled `farhan · 0.99`. The overlay then fades to about 30% and stays as a subtle detail. This nods to MIRA and the dlib face recognition work.
-- Bio: 3–4 sentences built on your "high-ownership engineer" framing.
+- Bio: written by Farhan himself (`profile.bio`). Claude leaves placeholders and never drafts personal copy.
 - **Education card:** CCNY, Macaulay Honors · B.S. Computer Science · May 2028 · GPA 3.99 · Dean's List · S Jay Levy Fellow. Coursework appears as mono chips.
 - **Leadership:** MHC++ Vice President · HackMHC++ founding organizer and host · MSO.
 - **Honors:** short "achievement unlocked" chips that pop in with a slight overshoot: SBUHacks 2025 Winner, EquiTech Track · HackRPI 2025 Best First-Time Hack · CodePath Web102 Honors.
@@ -284,7 +284,7 @@
 - Headline: "Let's build something." Each word reveals in turn.
 - **Copy-email button:** click to copy `farhank.dev@gmail.com`. The label scrambles to `copied ✓`, then back.
 - Links: GitHub, LinkedIn, Resume PDF.
-- Footer: `built with next.js + gsap · deployed on cloudflare` · live NYC clock (`NYC 14:07:32`) · `press \` for terminal` hint.
+- Footer: live NYC clock (`NYC 14:07:32`) · `press \` for terminal` hint.
 
 ### Terminal easter egg
 - Opens with `` ` `` or `⌘K`/`Ctrl+K` (desktop), or the header `>_` button (all devices). Slides down from the top as a translucent `--bg-raised` panel.

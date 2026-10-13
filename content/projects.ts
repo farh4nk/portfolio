@@ -9,6 +9,12 @@ export type FeaturedProject = {
   stack: string[];
   bullets: string[];
   metric?: string;
+  /** Mono callout shown next to the card, e.g. "← 14k pageviews". */
+  annotation: string;
+  /** Ribbon on winning cards. */
+  ribbon?: string;
+  /** Screenshot under /public. A placeholder renders until the file exists. */
+  image: string;
   diagram: string[];
   links: Link[];
 };
@@ -42,6 +48,8 @@ export const featured: FeaturedProject[] = [
       "GitHub Actions CI pipeline that blocks failed builds before deploy.",
     ],
     metric: "14,000+ pageviews",
+    annotation: "← 14k pageviews",
+    image: "/images/quenova.png",
     diagram: ["React UI", "Cloudflare Workers", "Supabase Auth", "Postgres + RLS"],
     links: [{ label: "Live", href: "https://quenova.app" }],
   },
@@ -59,6 +67,9 @@ export const featured: FeaturedProject[] = [
       "A queue feeds alerts like “car on your left” to ElevenLabs text-to-speech; snapshot mode sends the frame to Gemini for a full scene description.",
       "Hands-free: “live” and “snapshot” voice commands via the Web Speech API.",
     ],
+    annotation: "← EquiTech winner",
+    ribbon: "Winner · SBUHacks 2025 · EquiTech Track",
+    image: "/images/mira.png",
     diagram: ["Camera", "Frame POST", "YOLOv8", "Risk scorer", "Alert queue", "ElevenLabs"],
     links: [
       { label: "GitHub", href: "https://github.com/farh4nk/MIRA" },
@@ -79,6 +90,9 @@ export const featured: FeaturedProject[] = [
       "Tracks reaction time, premature inputs, missed windows, accuracy and streaks in real time, with difficulty that adapts to the player.",
       "Authenticated accounts on Express + MongoDB and an end-of-round analytics dashboard for progress across sessions.",
     ],
+    annotation: "← Best First-Time Hack",
+    ribbon: "Best First-Time Hack · HackRPI 2025",
+    image: "/images/brain-invaders.png",
     diagram: ["Phaser game", "Behavior tracker", "Adaptive difficulty", "Express API", "MongoDB", "Dashboard"],
     links: [
       { label: "GitHub", href: "https://github.com/deyan-reza/BrainInvaders" },

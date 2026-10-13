@@ -12,4 +12,10 @@ import { useGSAP } from "@gsap/react";
 // Register every plugin once; components import gsap from here.
 gsap.registerPlugin(useGSAP, ScrollTrigger, Flip, SplitText, DrawSVGPlugin, MotionPathPlugin, ScrambleTextPlugin);
 
+/** matchMedia condition for full motion. Everything animated goes through gsap.matchMedia() with this. */
+export const MOTION_OK = "(prefers-reduced-motion: no-preference)";
+
+/** Characters ScrambleText cycles through for mono labels. */
+export const SCRAMBLE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/_<>";
+
 export { gsap, ScrollTrigger, Flip, SplitText, useGSAP };
