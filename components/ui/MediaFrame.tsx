@@ -7,17 +7,19 @@ export function MediaFrame({
   pending,
   sizes,
   className = "",
+  imageClassName = "",
 }: {
   src?: string;
   alt: string;
   pending: string;
   sizes: string;
   className?: string;
+  imageClassName?: string;
 }) {
   return (
     <div className={`relative overflow-hidden bg-bg ${className}`}>
       {src ? (
-        <Image src={src} alt={alt} fill sizes={sizes} className="object-cover object-top" />
+        <Image src={src} alt={alt} fill sizes={sizes} className={`object-cover object-top ${imageClassName}`} />
       ) : (
         <div className="absolute inset-0 grid place-items-center">
           <svg aria-hidden className="absolute inset-0 h-full w-full text-rule" preserveAspectRatio="none">

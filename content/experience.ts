@@ -1,4 +1,6 @@
 export type Role = {
+  /** Schematic-graph slug, for roles a schematic node can highlight. */
+  slug?: string;
   title: string;
   org: string;
   dates: string;
@@ -17,6 +19,7 @@ export const experience: Role[] = [
     ],
   },
   {
+    slug: "cornell-robot",
     title: "Undergraduate Research Intern",
     org: "Cornell Tech · AI & Robotics Lab",
     dates: "May – Aug 2026",
@@ -28,6 +31,7 @@ export const experience: Role[] = [
     ],
   },
   {
+    slug: "bideshi",
     title: "Software Engineer Intern",
     org: "The Bideshi",
     dates: "Jan – Jun 2026",

@@ -46,7 +46,7 @@ export function Hero() {
               </a>
             </div>
           </div>
-          <div data-hero-item className="hidden sm:block">
+          <div data-hero-item>
             <Schematic />
           </div>
         </div>

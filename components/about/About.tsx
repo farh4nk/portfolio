@@ -3,8 +3,9 @@ import { publicAsset } from "@/lib/assets";
 import { Chip } from "../ui/Chip";
 import { CornerMarks } from "../ui/CornerMarks";
 import { MediaFrame } from "../ui/MediaFrame";
+import { PerceptionPortrait } from "./PerceptionPortrait";
 
-// Phase 4 adds the perception overlay (scan line, landmarks, bounding box) on the portrait.
+// The portrait carries a perception overlay (scan line, landmarks, bounding box), a nod to MIRA and the dlib work.
 export function About() {
   const { education } = profile;
 
@@ -12,16 +13,18 @@ export function About() {
     <div className="grid gap-12 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
       <div data-reveal className="relative mx-auto w-full max-w-sm md:mx-0 md:max-w-none">
         <CornerMarks />
-        <MediaFrame
-          src={publicAsset(profile.portrait)}
-          alt={`Portrait of ${profile.name}`}
-          pending="portrait.jpg"
-          sizes="(min-width: 768px) 40vw, 384px"
-          className="aspect-[4/5] rounded-md border border-rule"
-        />
+        <PerceptionPortrait label="farhan · 0.99">
+          <MediaFrame
+            src={publicAsset(profile.portrait)}
+            alt={`Portrait of ${profile.name}`}
+            pending="portrait.jpg"
+            sizes="(min-width: 768px) 40vw, 384px"
+            className="aspect-[4/5] rounded-md border border-rule"
+          />
+        </PerceptionPortrait>
         <p className="label-mono mt-3 flex justify-between">
           <span>fig. 04 — {profile.location.toLowerCase()}</span>
-          <span className="text-term">farhan · 0.99</span>
+          <span className="text-term">face detected · 1</span>
         </p>
       </div>
 

@@ -2,6 +2,7 @@
 
 import Lenis from "lenis";
 import { gsap, MOTION_OK, ScrollTrigger, useGSAP } from "@/lib/gsap";
+import { setLenis } from "@/lib/scroll";
 
 // Lenis on desktop pointers only; touch devices and reduced motion keep native scrolling.
 export function SmoothScroll() {
@@ -13,7 +14,9 @@ export function SmoothScroll() {
       lenis.on("scroll", ScrollTrigger.update);
       gsap.ticker.add(raf);
       gsap.ticker.lagSmoothing(0);
+      setLenis(lenis);
       return () => {
+        setLenis(null);
         gsap.ticker.remove(raf);
         gsap.ticker.lagSmoothing(500, 33);
         lenis.destroy();

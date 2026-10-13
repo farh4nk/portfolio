@@ -95,6 +95,7 @@ body {
   *::after {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
   }
 }
 
@@ -119,6 +120,55 @@ html.js:not(.motion-reduced) [data-hero-name],
 html.js:not(.motion-reduced) [data-split-words],
 html.js:not(.motion-reduced) [data-hero-item] {
   visibility: hidden;
+}
+
+/* Schematic: active node, and the project highlight it drives across the page */
+[data-node] rect {
+  transition: stroke 0.2s ease;
+}
+[data-node][data-active] rect {
+  stroke: var(--accent);
+}
+[data-project] {
+  transition:
+    filter 0.3s ease,
+    box-shadow 0.3s ease;
+}
+html[data-highlighting] [data-project]:not([data-lit]) {
+  filter: grayscale(1) opacity(0.35);
+}
+[data-project][data-lit] {
+  box-shadow:
+    0 0 0 1px var(--accent),
+    0 0 28px -8px var(--accent);
+}
+
+/* Winner star: slow wobble with a glow */
+@keyframes star-wobble {
+  0%,
+  100% {
+    transform: rotate(-8deg);
+  }
+  50% {
+    transform: rotate(8deg);
+  }
+}
+.star-badge {
+  animation: star-wobble 4s ease-in-out infinite;
+  text-shadow: 0 0 10px var(--signal);
+}
+
+/* Stack section: pinned scene on desktop with full motion and JS, cards everywhere else */
+.stack-scene {
+  display: none;
+}
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  html.js .stack-scene {
+    display: block;
+  }
+  html.js .stack-cards {
+    display: none;
+  }
 }
 
 /* SplitText word masks clip at the line box; give descenders (g, y) room without shifting layout. */

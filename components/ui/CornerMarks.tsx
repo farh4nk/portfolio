@@ -1,5 +1,11 @@
 // Technical-drawing registration marks on the four corners of a positioned parent.
-const positions = ["-top-[7px] -left-[5px]", "-top-[7px] -right-[5px]", "-bottom-[7px] -left-[5px]", "-bottom-[7px] -right-[5px]"];
+// Inside a .group they slide outward on hover.
+const positions = [
+  "-top-[7px] -left-[5px] group-hover:-translate-x-1 group-hover:-translate-y-1",
+  "-top-[7px] -right-[5px] group-hover:translate-x-1 group-hover:-translate-y-1",
+  "-bottom-[7px] -left-[5px] group-hover:-translate-x-1 group-hover:translate-y-1",
+  "-bottom-[7px] -right-[5px] group-hover:translate-x-1 group-hover:translate-y-1",
+];
 
 export function CornerMarks() {
   return (
@@ -9,7 +15,7 @@ export function CornerMarks() {
           key={p}
           aria-hidden
           data-corner
-          className={`pointer-events-none absolute ${p} font-mono text-xs leading-none text-accent/70`}
+          className={`pointer-events-none absolute ${p} font-mono text-xs leading-none text-accent/70 transition-transform duration-300`}
         >
           +
         </span>

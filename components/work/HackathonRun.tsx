@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { HackathonEntry } from "@/content/projects";
 import { hackathons } from "@/content/projects";
+import { openCaseFile } from "@/lib/casefile";
 import { Chip } from "../ui/Chip";
 
 const pad = (n: number) => String(n).padStart(2, "0");
@@ -70,12 +71,18 @@ function Node({ entry, open, onToggle }: { entry: HackathonEntry; open: boolean;
   );
   const cls = "flex w-full items-center gap-4 rounded-md p-2 hover:bg-bg-raised lg:flex-col lg:gap-3";
 
-  // Winners jump to their featured card (Phase 4: open the case file). Others expand a compact panel.
+  // Winners open their case file, morphing out of this node. Others expand a compact panel.
   if (entry.featuredSlug) {
+    const slug = entry.featuredSlug;
     return (
-      <a href={`#work-${entry.featuredSlug}`} className={cls}>
+      <button
+        type="button"
+        aria-label={`${entry.project}, ${entry.award}. Open the case file`}
+        onClick={(e) => openCaseFile(slug, e.currentTarget)}
+        className={cls}
+      >
         {body}
-      </a>
+      </button>
     );
   }
   return (
@@ -108,7 +115,7 @@ export function HackathonRun() {
           const open = openOrder === h.order;
           return (
             <li key={h.order} data-reveal>
-              <div className={h.award ? "" : "lg:pt-2"}>
+              <div data-project={h.slug} className={`rounded-md ${h.award ? "" : "lg:pt-2"}`}>
                 <Node entry={h} open={open} onToggle={() => setOpenOrder(open ? null : h.order)} />
               </div>
               {open && (

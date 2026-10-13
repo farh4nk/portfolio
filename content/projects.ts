@@ -20,6 +20,8 @@ export type FeaturedProject = {
 };
 
 export type HackathonEntry = {
+  /** Matches schematic-graph project slugs; winners share their featured card's slug. */
+  slug: string;
   order: number;
   event: string;
   project: string;
@@ -105,6 +107,7 @@ export const featured: FeaturedProject[] = [
 // Fall 2025 hackathon run, in chronological order.
 export const hackathons: HackathonEntry[] = [
   {
+    slug: "recipal",
     order: 1,
     event: "BYTE Hacks",
     project: "reciPal",
@@ -122,6 +125,7 @@ export const hackathons: HackathonEntry[] = [
     ],
   },
   {
+    slug: "luna",
     order: 2,
     event: "NASA Space Apps",
     project: "LUNA",
@@ -137,6 +141,7 @@ export const hackathons: HackathonEntry[] = [
     ],
   },
   {
+    slug: "nutriscope",
     order: 3,
     event: "Hack Knight",
     project: "NutriScope",
@@ -151,6 +156,7 @@ export const hackathons: HackathonEntry[] = [
     ],
   },
   {
+    slug: "mira",
     order: 4,
     event: "SBUHacks",
     project: "MIRA",
@@ -158,6 +164,7 @@ export const hackathons: HackathonEntry[] = [
     award: "Winner, EquiTech Track",
   },
   {
+    slug: "brain-invaders",
     order: 5,
     event: "HackRPI",
     project: "Brain Invaders",

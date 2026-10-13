@@ -12,7 +12,10 @@ import { Marquee } from "@/components/ui/Marquee";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { Stats } from "@/components/ui/Stats";
 import { BentoGrid } from "@/components/work/BentoGrid";
+import { CaseFileController } from "@/components/work/CaseFile";
 import { HackathonRun } from "@/components/work/HackathonRun";
+import { featured } from "@/content/projects";
+import { publicAsset } from "@/lib/assets";
 
 const container = "mx-auto max-w-6xl px-4 sm:px-6";
 const section = `${container} scroll-mt-16 py-24 sm:py-32`;
@@ -59,6 +62,7 @@ export default function Home() {
         </section>
       </main>
       <Footer />
+      <CaseFileController projects={featured.map((p) => ({ ...p, imageSrc: publicAsset(p.image) }))} />
       <PageMotion />
     </>
   );
