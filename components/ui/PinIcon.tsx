@@ -1,5 +1,5 @@
 // Small line icon for the hero location line. Plain SVG (no hooks), so the build-time OG image can
-// render them too.
+// render it too.
 
 export function PinIcon({ size = 14 }: { size?: number }) {
   return (
