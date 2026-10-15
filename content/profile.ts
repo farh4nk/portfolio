@@ -6,14 +6,18 @@ export const profile = {
     "robotics & perception",
     "full-stack products",
     "applied AI at the edge",
+    "hackathon enthusiast",
+    "builder"
   ],
   // Written by Farhan. Placeholders render until replaced.
-  tagline: "[ TODO: hero tagline ]",
-  summary: "[ TODO: hero supporting line ]",
+  tagline: "Building systems for positive impact.",
+  summary: "Software engineer with experience in full stack architecture, research settings, robotics, and ML.",
   location: "New York, NY",
+  // Hero location line, between the pin and skyline icons.
+  city: "NYC",
   portrait: "/images/portrait.webp",
   bio: ["[ TODO: bio paragraph 1 ]", "[ TODO: bio paragraph 2 ]"],
-  contactBlurb: "[ TODO: one line about what you're open to ]",
+  contactBlurb: "Seeking software engineering/machine learning/forward deployed engineering internships.",
   email: "farhank.dev@gmail.com",
   // Live URL; used for canonical, Open Graph and the sitemap.
   siteUrl: "https://farhan-khan.farhank-dev.workers.dev",
@@ -43,7 +47,6 @@ export const profile = {
   leadership: [
     { role: "Vice President", org: "MHC++ (Macaulay Honors Computer Science Club)" },
     { role: "Organizer & Host", org: "HackMHC++, the club's first hackathon" },
-    { role: "Member", org: "Muslim Students Organization" },
   ],
   awards: [
     "Hack Knight Fall 2026 · Best Use of Presage",

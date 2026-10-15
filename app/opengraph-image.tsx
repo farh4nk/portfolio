@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
+import { PinIcon, SkylineIcon } from "@/components/ui/CityIcons";
 import { profile } from "@/content/profile";
 
 // Rendered once at build time into out/opengraph-image; layout metadata links it automatically.
@@ -35,9 +36,10 @@ export default async function Image() {
         }}
       >
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", flex: 1 }}>
-          <div style={{ display: "flex", fontSize: 24, color: C.muted, letterSpacing: 2, textTransform: "uppercase" }}>
-            <span style={{ color: C.accent, marginRight: 14 }}>{"//"}</span>
-            {profile.kicker}
+          <div style={{ display: "flex", alignItems: "center", fontSize: 24, color: C.muted, letterSpacing: 2, textTransform: "uppercase" }}>
+            <div style={{ display: "flex", color: C.accent, marginRight: 12 }}>{PinIcon({ size: 26 })}</div>
+            {profile.city}
+            <div style={{ display: "flex", color: C.accent, marginLeft: 12 }}>{SkylineIcon({ size: 26 })}</div>
           </div>
           <div style={{ display: "flex", flexDirection: "column" }}>
             <div
