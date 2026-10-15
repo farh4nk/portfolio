@@ -86,6 +86,11 @@ body {
   outline-offset: 3px;
 }
 
+/* Skip-link and anchor targets take focus programmatically; no ring around a whole section. */
+[tabindex="-1"]:focus {
+  outline: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

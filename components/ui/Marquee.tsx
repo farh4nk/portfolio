@@ -14,6 +14,12 @@ export function Marquee() {
     const mm = gsap.matchMedia();
     mm.add(MOTION_OK, () => {
       const loop = gsap.to(track.current, { xPercent: -50, duration: 40, ease: "none", repeat: -1 });
+      // Hovering pauses it, so moving text can be stopped and read.
+      const el = track.current!;
+      const pause = () => loop.pause();
+      const play = () => loop.play();
+      el.addEventListener("pointerenter", pause);
+      el.addEventListener("pointerleave", play);
       const setSkew = gsap.quickSetter(track.current, "skewX", "deg");
       // Velocity spikes kick the proxy up; one tween decays it back to rest.
       const proxy = { skew: 0, speed: 1 };
@@ -41,6 +47,10 @@ export function Marquee() {
           });
         },
       });
+      return () => {
+        el.removeEventListener("pointerenter", pause);
+        el.removeEventListener("pointerleave", play);
+      };
     });
   });
 

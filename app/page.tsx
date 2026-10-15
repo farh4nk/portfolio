@@ -8,6 +8,7 @@ import { Hero } from "@/components/hero/Hero";
 import { PageMotion } from "@/components/motion/PageMotion";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import { SmoothScroll } from "@/components/SmoothScroll";
+import { ResumePreview } from "@/components/resume/ResumePreview";
 import { StackExplorer } from "@/components/stack/StackExplorer";
 import { Terminal } from "@/components/terminal/Terminal";
 import { Marquee } from "@/components/ui/Marquee";
@@ -29,7 +30,7 @@ export default function Home() {
       <SmoothScroll />
       <ScrollProgress />
       <Header />
-      <main id="top">
+      <main id="top" tabIndex={-1}>
         <div className={container}>
           <Hero />
         </div>
@@ -63,6 +64,7 @@ export default function Home() {
       </main>
       <Footer />
       <CaseFileController projects={featured.map((p) => ({ ...p, imageSrc: publicAsset(p.image) }))} />
+      <ResumePreview />
       <Terminal resumeHref={publicAsset(profile.links.resume) ?? null} />
       <PageMotion />
     </>

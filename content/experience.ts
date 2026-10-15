@@ -8,15 +8,6 @@ export type Role = {
 // Newest first.
 export const experience: Role[] = [
   {
-    title: "Primary Software Engineer (Founding)",
-    org: "Medical Education Platform",
-    dates: "Aug 2026 – Present",
-    bullets: [
-      "Lead engineer on an early-stage learning platform for medical students.",
-      "Designed the relational schema, authentication, and server-side logic for content delivery.",
-    ],
-  },
-  {
     title: "Undergraduate Research Intern",
     org: "Cornell Tech · AI & Robotics Lab",
     dates: "May – Aug 2026",

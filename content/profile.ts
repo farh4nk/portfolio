@@ -11,10 +11,14 @@ export const profile = {
   tagline: "[ TODO: hero tagline ]",
   summary: "[ TODO: hero supporting line ]",
   location: "New York, NY",
-  portrait: "/images/portrait.jpg",
+  portrait: "/images/portrait.webp",
   bio: ["[ TODO: bio paragraph 1 ]", "[ TODO: bio paragraph 2 ]"],
   contactBlurb: "[ TODO: one line about what you're open to ]",
   email: "farhank.dev@gmail.com",
+  // Live URL; used for canonical, Open Graph and the sitemap.
+  siteUrl: "https://farhan-khan.farhank-dev.workers.dev",
+  // Cloudflare Web Analytics site token (dashboard → Analytics & Logs → Web Analytics). Empty = no beacon.
+  analyticsToken: "",
   links: {
     github: "https://github.com/farh4nk",
     linkedin: "https://linkedin.com/in/farhank0127",

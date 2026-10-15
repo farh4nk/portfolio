@@ -1,5 +1,6 @@
 import { profile } from "@/content/profile";
 import { publicAsset } from "@/lib/assets";
+import { ResumeLink } from "../resume/ResumeLink";
 import { CopyEmail } from "./CopyEmail";
 
 export function Contact() {
@@ -7,8 +8,8 @@ export function Contact() {
   const links = [
     { label: "GitHub", href: profile.links.github },
     { label: "LinkedIn", href: profile.links.linkedin },
-    ...(resume ? [{ label: "Resume PDF", href: resume }] : []),
   ];
+  const linkClass = "label-mono text-ink hover:text-accent";
 
   return (
     <div>
@@ -23,11 +24,18 @@ export function Contact() {
         <ul className="flex flex-wrap gap-x-6 gap-y-2">
           {links.map((l) => (
             <li key={l.href}>
-              <a href={l.href} target="_blank" rel="noreferrer" className="label-mono text-ink hover:text-accent">
+              <a href={l.href} target="_blank" rel="noreferrer" className={linkClass}>
                 {l.label} ↗
               </a>
             </li>
           ))}
+          {resume && (
+            <li>
+              <ResumeLink href={resume} className={linkClass}>
+                Resume PDF ↗
+              </ResumeLink>
+            </li>
+          )}
         </ul>
       </div>
     </div>

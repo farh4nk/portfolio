@@ -15,7 +15,18 @@ export function SmoothScroll() {
       gsap.ticker.add(raf);
       gsap.ticker.lagSmoothing(0);
       setLenis(lenis);
+      // Lenis cancels the native jump, which would also move the keyboard focus point. Move it
+      // ourselves so the next Tab continues from the section, not the nav.
+      const onClick = (e: MouseEvent) => {
+        const link = (e.target as Element).closest<HTMLAnchorElement>('a[href^="#"]');
+        const target = link && document.getElementById(link.hash.slice(1));
+        if (!target) return;
+        if (!target.hasAttribute("tabindex")) target.tabIndex = -1;
+        target.focus({ preventScroll: true });
+      };
+      document.addEventListener("click", onClick);
       return () => {
+        document.removeEventListener("click", onClick);
         setLenis(null);
         gsap.ticker.remove(raf);
         gsap.ticker.lagSmoothing(500, 33);

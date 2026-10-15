@@ -21,13 +21,17 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(profile.siteUrl),
+  alternates: { canonical: "/" },
   title: `${profile.name} — Software Engineer`,
   description: `${profile.tagline} ${profile.summary}`,
   openGraph: {
     title: `${profile.name} — Software Engineer`,
     description: profile.tagline,
     type: "website",
+    url: "/",
   },
+  twitter: { card: "summary_large_image" },
 };
 
 export const viewport: Viewport = {
@@ -39,7 +43,10 @@ export const viewport: Viewport = {
 const bootScript = `(function(d){
   d.classList.add('js');
   try { var t = localStorage.getItem('theme'); if (t === 'light' || t === 'dark') d.setAttribute('data-theme', t); } catch (e) {}
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('motion-reduced');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)');
+  // Keep the class in step if the OS setting changes mid-visit, or content GSAP reverts stays hidden.
+  if (rm.addEventListener) rm.addEventListener('change', function (e) { d.classList.toggle('motion-reduced', e.matches); });
+  if (rm.matches) d.classList.add('motion-reduced');
   else { try { if (!sessionStorage.getItem('booted')) d.classList.add('booting'); } catch (e) {} }
   // Failsafe: if the app hasn't started the intro within 2.5s (slow or failed JS), drop it.
   setTimeout(function () { if (!window.__bootStarted) d.classList.remove('booting'); }, 2500);
@@ -71,7 +78,16 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
       </head>
-      <body className="min-h-screen">{children}</body>
+      <body className="min-h-screen">
+        {children}
+        {profile.analyticsToken && (
+          <script
+            defer
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            data-cf-beacon={JSON.stringify({ token: profile.analyticsToken })}
+          />
+        )}
+      </body>
     </html>
   );
 }

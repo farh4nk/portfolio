@@ -59,7 +59,7 @@ export const featured: FeaturedProject[] = [
     ],
     metric: "14,000+ pageviews",
     annotation: "← 14k pageviews",
-    image: "/images/quenova.png",
+    image: "/images/quenova.webp",
     diagram: ["React UI", "Cloudflare Workers", "Supabase Auth", "Postgres + RLS"],
     links: [{ label: "Live", href: "https://quenova.app" }],
   },
@@ -79,7 +79,7 @@ export const featured: FeaturedProject[] = [
     ],
     annotation: "← EquiTech winner",
     ribbon: "Winner · SBUHacks 2025 · EquiTech Track",
-    image: "/images/mira.png",
+    image: "/images/mira.webp",
     imageFocus: "center",
     diagram: ["Camera", "Frame POST", "YOLOv8", "Risk scorer", "Alert queue", "ElevenLabs"],
     links: [
@@ -103,7 +103,7 @@ export const featured: FeaturedProject[] = [
     ],
     annotation: "← Best First-Time Hack",
     ribbon: "Best First-Time Hack · HackRPI 2025",
-    image: "/images/brain-invaders.jpg",
+    image: "/images/brain-invaders.webp",
     diagram: ["Phaser game", "Behavior tracker", "Adaptive difficulty", "Express API", "MongoDB", "Dashboard"],
     links: [
       { label: "GitHub", href: "https://github.com/deyan-reza/BrainInvaders" },
@@ -129,7 +129,7 @@ export const featured: FeaturedProject[] = [
     note: "An informational wellness monitor, not a medical device. So far it has only been tested on adults.",
     annotation: "← Best Use of Presage",
     ribbon: "Winner · Hack Knight Fall 2026 · Best Use of Presage",
-    image: "/images/cribby.png",
+    image: "/images/cribby.webp",
     diagram: ["Pi 4 camera", "Frame pacer", "Presage · C++", "Sleep classifier", "Dashboard", "Tiger Data + Gemini"],
     links: [
       { label: "GitHub", href: "https://github.com/farh4nk/cribby" },

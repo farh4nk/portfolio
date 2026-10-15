@@ -60,6 +60,12 @@ export function Header() {
         scrolled ? "border-rule bg-bg/80 backdrop-blur" : "border-transparent"
       }`}
     >
+      <a
+        href="#top"
+        className="label-mono sr-only z-50 rounded-md bg-accent px-4 py-3 font-bold text-bg focus:not-sr-only focus:absolute focus:top-2 focus:left-3"
+      >
+        skip to content
+      </a>
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-6">
         <a href="#top" className="font-display text-lg font-bold tracking-tight">
           FK<span className="text-accent">.</span>
@@ -69,8 +75,8 @@ export function Header() {
             <a
               key={item.href}
               href={item.href}
-              aria-current={active === item.href ? "true" : undefined}
-              className="label-mono hover:text-accent aria-[current=true]:text-ink"
+              aria-current={active === item.href ? "location" : undefined}
+              className="label-mono hover:text-accent aria-[current=location]:text-ink"
             >
               <span className="text-accent">[{String(i + 1).padStart(2, "0")}]</span> {item.label}
             </a>

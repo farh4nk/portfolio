@@ -15,6 +15,7 @@ export type CommandContext = {
   openHackathon: (order: number) => void;
   replayBoot: () => void;
   resumeHref: string | null;
+  openResume: (href: string) => void;
 };
 
 const A = ({ href, children }: { href: string; children: ReactNode }) => (
@@ -203,7 +204,16 @@ export function run(raw: string, ctx: CommandContext): ReactNode | null {
           </div>
           <div className="mt-2">
             {ctx.resumeHref ? (
-              <A href={ctx.resumeHref}>download resume.pdf ↗</A>
+              <span className="flex flex-wrap gap-x-6">
+                <button
+                  type="button"
+                  onClick={() => ctx.openResume(ctx.resumeHref!)}
+                  className="text-accent underline-offset-4 hover:underline"
+                >
+                  preview resume.pdf
+                </button>
+                <A href={ctx.resumeHref}>open in new tab ↗</A>
+              </span>
             ) : (
               <>
                 full history: <A href={profile.links.linkedin}>linkedin ↗</A>

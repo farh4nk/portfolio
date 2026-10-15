@@ -2,7 +2,7 @@
 
 import { type ReactNode, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { openCaseFile, slugFromHash } from "@/lib/casefile";
-import { BOOT_REPLAY, HACKATHON_OPEN, TERMINAL_OPEN } from "@/lib/events";
+import { BOOT_REPLAY, HACKATHON_OPEN, openResume, TERMINAL_OPEN } from "@/lib/events";
 import { gsap } from "@/lib/gsap";
 import { lockScroll, scrollToElement } from "@/lib/scroll";
 import { currentTheme, setTheme } from "@/lib/theme";
@@ -97,8 +97,9 @@ export function Terminal({ resumeHref }: { resumeHref: string | null }) {
       lockScroll(false);
       const action = afterClose.current;
       afterClose.current = null;
-      if (action) action();
-      else opener.current?.focus({ preventScroll: true });
+      // Restore focus first, so a follow-up overlay (resume preview) returns focus there too.
+      opener.current?.focus({ preventScroll: true });
+      action?.();
     };
   }, [visible]);
 
@@ -123,6 +124,11 @@ export function Terminal({ resumeHref }: { resumeHref: string | null }) {
     },
     replayBoot: () => window.dispatchEvent(new Event(BOOT_REPLAY)),
     resumeHref,
+    openResume: (href: string) => {
+      // The preview is its own modal; wait for the terminal to close and release the page first.
+      afterClose.current = () => openResume(href);
+      setOpen(false);
+    },
   };
 
   function submit() {
@@ -186,7 +192,7 @@ export function Terminal({ resumeHref }: { resumeHref: string | null }) {
           <span className="label-mono">
             <span className="text-term">●</span> terminal — ~/portfolio
           </span>
-          <button type="button" onClick={() => ctx.close()} className="label-mono hover:text-accent">
+          <button type="button" onClick={() => ctx.close()} aria-label="Close terminal" className="label-mono hover:text-accent">
             [ esc ✕ ]
           </button>
         </div>

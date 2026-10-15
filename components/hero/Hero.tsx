@@ -2,9 +2,13 @@ import { profile } from "@/content/profile";
 import { publicAsset } from "@/lib/assets";
 import { CornerMarks } from "../ui/CornerMarks";
 import { MediaFrame } from "../ui/MediaFrame";
+import { ResumeLink } from "../resume/ResumeLink";
 import { HeroIntro } from "./HeroIntro";
 import { PerceptionPortrait } from "./PerceptionPortrait";
 import { TypedRoles } from "./TypedRoles";
+
+const secondaryCta =
+  "label-mono rounded-md border border-rule px-4 py-3 text-ink hover:border-accent hover:text-accent";
 
 // The headshot runs a face-detection pass after the boot intro, then the overlay fades away.
 // Desktop: the headshot sits top-right beside the name, like the photo on an ID card, spanning from the
@@ -23,7 +27,7 @@ export function Hero() {
                 <MediaFrame
                   src={publicAsset(profile.portrait)}
                   alt={`Portrait of ${profile.name}`}
-                  pending="portrait.jpg"
+                  pending="portrait.webp"
                   priority
                   sizes="(min-width: 1280px) 288px, (min-width: 1024px) 256px, 144px"
                   className="aspect-[4/5] rounded-md border border-rule"
@@ -62,14 +66,15 @@ export function Hero() {
                 <a href="#work" className="label-mono rounded-md bg-accent px-4 py-3 font-bold text-bg hover:opacity-90">
                   [ View work ↓ ]
                 </a>
-                <a
-                  href={resume ?? profile.links.github}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="label-mono rounded-md border border-rule px-4 py-3 text-ink hover:border-accent hover:text-accent"
-                >
-                  [ {resume ? "Resume" : "GitHub"} ↗ ]
-                </a>
+                {resume ? (
+                  <ResumeLink href={resume} className={secondaryCta}>
+                    [ Resume ↗ ]
+                  </ResumeLink>
+                ) : (
+                  <a href={profile.links.github} target="_blank" rel="noreferrer" className={secondaryCta}>
+                    [ GitHub ↗ ]
+                  </a>
+                )}
               </div>
             </div>
           </div>

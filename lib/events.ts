@@ -21,3 +21,16 @@ export function whenBooted(fn: () => void): () => void {
 export function openTerminal() {
   window.dispatchEvent(new Event(TERMINAL_OPEN));
 }
+
+export const RESUME_OPEN = "resume:open";
+
+/** The in-page PDF preview is desktop-only: mobile browsers don't render PDFs in iframes. */
+export function canPreviewResume() {
+  return window.matchMedia("(min-width: 768px) and (hover: hover) and (pointer: fine)").matches;
+}
+
+/** Opens the resume preview, or the PDF in a new tab where previews don't work. */
+export function openResume(href: string) {
+  if (canPreviewResume()) window.dispatchEvent(new CustomEvent(RESUME_OPEN, { detail: href }));
+  else window.open(href, "_blank", "noreferrer");
+}
