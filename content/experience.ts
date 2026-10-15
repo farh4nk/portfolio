@@ -34,6 +34,9 @@ export const experience: Role[] = [
     dates: "Jul – Aug 2025",
     bullets: [
       "Troubleshot hardware, software, and network issues across municipal department facilities.",
+      "Assisted in the design and implementation of an internal webpage to streamline new account registrations.",
+      "Collaborated with business analysts and developers in the Software Development Life Cycle."
+
     ],
   },
 ];

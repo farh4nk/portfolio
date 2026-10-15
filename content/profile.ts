@@ -9,14 +9,16 @@ export const profile = {
     "hackathon enthusiast",
     "builder"
   ],
-  // Written by Farhan. Placeholders render until replaced.
+  // Written by Farhan.
   tagline: "Building systems for positive impact.",
   summary: "Software engineer with experience in full stack architecture, research settings, robotics, and ML.",
   location: "New York, NY",
   // Hero location line, after the pin icon.
   city: "NYC",
   portrait: "/images/portrait.webp",
-  bio: ["[ TODO: bio paragraph 1 ]", "[ TODO: bio paragraph 2 ]"],
+  bio: ["Hello! My name is Farhan. I'm a third-year CS student at The City College of New York, and I'm a Macaulay Honors Student. I'm a software engineer interested in health-tech and AI/ML. I love building things that serve a real purpose and can benefit people's lives. This can be seen amongst my hackathon projects, of which I've won 3.", 
+        "Most recently, I did research at Cornell Tech's AI and Robotics Lab. There, I helped co-design a robot to facilitate social interactions amongst older adults. Before that, I was a SWE intern at The Bideshi, where I worked on a team to create an e-commerce platform for an online cultural brand with over 100k followers. I'm comfortable working in established organizations as well as fast-paced startup environments.",
+       "If you'd like to connect with me, don't hesitate to reach out! My contact info is right here on my portfolio."],
   contactBlurb: "Seeking software engineering/machine learning/forward deployed engineering internships.",
   email: "farhank.dev@gmail.com",
   // Live URL; used for canonical, Open Graph and the sitemap.
