@@ -10,11 +10,11 @@ import { ScrollProgress } from "@/components/ScrollProgress";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { ResumePreview } from "@/components/resume/ResumePreview";
 import { StackExplorer } from "@/components/stack/StackExplorer";
-import { Terminal } from "@/components/terminal/Terminal";
+import { TerminalLauncher } from "@/components/terminal/TerminalLauncher";
 import { Marquee } from "@/components/ui/Marquee";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { BentoGrid } from "@/components/work/BentoGrid";
-import { CaseFileController } from "@/components/work/CaseFile";
+import { CaseFileController } from "@/components/work/CaseFileController";
 import { HackathonRun } from "@/components/work/HackathonRun";
 import { profile } from "@/content/profile";
 import { featured } from "@/content/projects";
@@ -65,7 +65,7 @@ export default function Home() {
       <Footer />
       <CaseFileController projects={featured.map((p) => ({ ...p, imageSrc: publicAsset(p.image) }))} />
       <ResumePreview />
-      <Terminal resumeHref={publicAsset(profile.links.resume) ?? null} />
+      <TerminalLauncher resumeHref={publicAsset(profile.links.resume) ?? null} />
       <PageMotion />
     </>
   );

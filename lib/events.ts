@@ -18,6 +18,16 @@ export function whenBooted(fn: () => void): () => void {
   return () => window.removeEventListener(BOOT_DONE, handler);
 }
 
+const isTyping = (t: EventTarget | null) =>
+  t instanceof HTMLElement && (t.isContentEditable || ["INPUT", "TEXTAREA", "SELECT"].includes(t.tagName));
+
+/** ` or ⌘K / Ctrl+K. A backtick typed into a form field doesn't count, except in the terminal's own input. */
+export function isTerminalShortcut(e: KeyboardEvent, terminalInput: HTMLElement | null = null) {
+  const combo = (e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k";
+  const tick = e.key === "`" && !e.metaKey && !e.ctrlKey && !e.altKey;
+  return combo || (tick && (!isTyping(e.target) || e.target === terminalInput));
+}
+
 export function openTerminal() {
   window.dispatchEvent(new Event(TERMINAL_OPEN));
 }

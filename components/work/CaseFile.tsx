@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { Flip } from "gsap/Flip";
+import { useEffect, useRef } from "react";
 import type { FeaturedProject } from "@/content/projects";
-import { CASEFILE_EVENT, caseFileSource, closeCaseFile, consumeSwap, slugFromHash, swapCaseFile } from "@/lib/casefile";
-import { Flip, gsap, useGSAP } from "@/lib/gsap";
+import { caseFileSource, closeCaseFile, consumeSwap, swapCaseFile } from "@/lib/casefile";
+import { gsap, useGSAP } from "@/lib/gsap";
 import { lockScroll } from "@/lib/scroll";
 import { Chip } from "../ui/Chip";
 import { MediaFrame } from "../ui/MediaFrame";
@@ -14,49 +15,13 @@ import { VideoFacade, youTubeId } from "./VideoFacade";
 
 export type CaseFileProject = FeaturedProject & { imageSrc?: string };
 
+gsap.registerPlugin(Flip);
+
 const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const INERT_TARGETS = "body > header, body > main, body > footer";
 
-/** Owns which case file is open, mirroring the #work/<slug> hash (so Back closes it). */
-export function CaseFileController({ projects }: { projects: CaseFileProject[] }) {
-  const [slug, setSlug] = useState<string | null>(null);
-
-  useEffect(() => {
-    const sync = () => {
-      const next = slugFromHash();
-      setSlug(next && projects.some((p) => p.slug === next) ? next : null);
-    };
-    sync();
-    window.addEventListener(CASEFILE_EVENT, sync);
-    window.addEventListener("popstate", sync);
-    window.addEventListener("hashchange", sync);
-    return () => {
-      window.removeEventListener(CASEFILE_EVENT, sync);
-      window.removeEventListener("popstate", sync);
-      window.removeEventListener("hashchange", sync);
-    };
-  }, [projects]);
-
-  const index = projects.findIndex((p) => p.slug === slug);
-  // Keep the last project rendered while the close animation runs.
-  const [shown, setShown] = useState<string | null>(null);
-  if (slug && slug !== shown) setShown(slug);
-  const shownIndex = projects.findIndex((p) => p.slug === shown);
-
-  if (shownIndex < 0) return null;
-  return (
-    <CaseFile
-      key={shown}
-      project={projects[shownIndex]}
-      position={`${String(shownIndex + 1).padStart(2, "0")} / ${String(projects.length).padStart(2, "0")}`}
-      next={projects[(shownIndex + 1) % projects.length]}
-      open={index >= 0}
-      onClosed={() => setShown(null)}
-    />
-  );
-}
-
-function CaseFile({
+/** Full-screen case file. Loaded on demand by CaseFileController. */
+export function CaseFile({
   project,
   position,
   next,

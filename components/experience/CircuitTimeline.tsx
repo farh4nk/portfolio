@@ -7,49 +7,53 @@ export function CircuitTimeline() {
   return (
     <TimelineMotion>
       <ol className="relative">
-        {experience.map((r, i) => (
-          <li key={r.org} data-role className="relative grid gap-x-8 pb-14 pl-10 last:pb-0 md:grid-cols-[11rem_1fr] md:pl-0">
-            <p data-role-dates className="label-mono pt-1 md:pr-10 md:text-right">
-              {r.dates}
-            </p>
-            {/* Wire from this node's center to the next node's center; the last role has none, so the
-                line ends at its dot. Node centers sit 13.5px below each row's top. */}
-            {i < experience.length - 1 && (
-              <span aria-hidden className="absolute top-[13.5px] -bottom-[13.5px] left-[7px] w-px bg-rule md:left-[calc(11rem+7px)]">
-                <span data-wire-segment className="absolute inset-0 origin-top bg-accent" />
-              </span>
-            )}
-            <span aria-hidden className="absolute top-1.5 left-0 z-10 h-[15px] w-[15px] md:left-[11rem]">
-              <span data-node-ring className="absolute inset-0 rounded-full border border-accent opacity-0" />
-              <span
-                data-node
-                className={`absolute inset-0 rounded-full border-2 bg-bg ${i === 0 ? "border-term" : "border-accent"}`}
-              >
-                <span
-                  data-node-fill
-                  className={`absolute inset-[2px] rounded-full ${i === 0 ? "bg-term" : "bg-accent"}`}
-                />
-              </span>
-            </span>
-            <div className="md:pl-10">
-              <h3 className="mt-1 font-display text-xl font-bold sm:text-2xl md:mt-0">{r.title}</h3>
-              <p className="mt-1 text-accent">
-                {r.org}
-                {i === 0 && <span className="label-mono ml-3 normal-case text-term">● current</span>}
+        {experience.map((r, i) => {
+          // Only an ongoing role ("… – Present") gets the green node and the "current" tag.
+          const current = r.dates.includes("Present");
+          return (
+            <li key={r.org} data-role className="relative grid gap-x-8 pb-14 pl-10 last:pb-0 md:grid-cols-[11rem_1fr] md:pl-0">
+              <p data-role-dates className="label-mono pt-1 md:pr-10 md:text-right">
+                {r.dates}
               </p>
-              <ul className="mt-4 max-w-2xl space-y-2 text-ink-muted">
-                {r.bullets.map((b) => (
-                  <li key={b} data-log className="flex gap-3">
-                    <span aria-hidden className="font-mono text-term">
-                      &gt;
-                    </span>
-                    <span>{b}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </li>
-        ))}
+              {/* Wire from this node's center to the next node's center; the last role has none, so the
+                  line ends at its dot. Node centers sit 13.5px below each row's top. */}
+              {i < experience.length - 1 && (
+                <span aria-hidden className="absolute top-[13.5px] -bottom-[13.5px] left-[7px] w-px bg-rule md:left-[calc(11rem+7px)]">
+                  <span data-wire-segment className="absolute inset-0 origin-top bg-accent" />
+                </span>
+              )}
+              <span aria-hidden className="absolute top-1.5 left-0 z-10 h-[15px] w-[15px] md:left-[11rem]">
+                <span data-node-ring className="absolute inset-0 rounded-full border border-accent opacity-0" />
+                <span
+                  data-node
+                  className={`absolute inset-0 rounded-full border-2 bg-bg ${current ? "border-term" : "border-accent"}`}
+                >
+                  <span
+                    data-node-fill
+                    className={`absolute inset-[2px] rounded-full ${current ? "bg-term" : "bg-accent"}`}
+                  />
+                </span>
+              </span>
+              <div className="md:pl-10">
+                <h3 className="mt-1 font-display text-xl font-bold sm:text-2xl md:mt-0">{r.title}</h3>
+                <p className="mt-1 text-accent">
+                  {r.org}
+                  {current && <span className="label-mono ml-3 normal-case text-term">● current</span>}
+                </p>
+                <ul className="mt-4 max-w-2xl space-y-2 text-ink-muted">
+                  {r.bullets.map((b) => (
+                    <li key={b} data-log className="flex gap-3">
+                      <span aria-hidden className="font-mono text-term">
+                        &gt;
+                      </span>
+                      <span>{b}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </li>
+          );
+        })}
       </ol>
     </TimelineMotion>
   );

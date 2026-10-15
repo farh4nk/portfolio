@@ -2,7 +2,7 @@
 
 import { type ReactNode, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { openCaseFile, slugFromHash } from "@/lib/casefile";
-import { BOOT_REPLAY, HACKATHON_OPEN, openResume, TERMINAL_OPEN } from "@/lib/events";
+import { BOOT_REPLAY, HACKATHON_OPEN, isTerminalShortcut, openResume, TERMINAL_OPEN } from "@/lib/events";
 import { gsap } from "@/lib/gsap";
 import { lockScroll, scrollToElement } from "@/lib/scroll";
 import { currentTheme, setTheme } from "@/lib/theme";
@@ -14,14 +14,11 @@ const PROMPT = "guest@farhan:~$";
 const INERT_TARGETS = "body > header, body > main, body > footer";
 const WELCOME: Entry = { id: 0, output: "welcome. type 'help' to see what this terminal can do." };
 
-const isTyping = (t: EventTarget | null) =>
-  t instanceof HTMLElement && (t.isContentEditable || ["INPUT", "TEXTAREA", "SELECT"].includes(t.tagName));
-
 /**
  * Easter-egg terminal. Opens with ` or ⌘K / Ctrl+K, or the header's >_ button (the way in on phones).
  * Slides down from the top; Esc, `exit` or ` closes it. History survives closing.
  */
-export function Terminal({ resumeHref }: { resumeHref: string | null }) {
+export function Terminal({ resumeHref, startOpen = false }: { resumeHref: string | null; startOpen?: boolean }) {
   const [open, setOpen] = useState(false);
   const [visible, setVisible] = useState(false);
   const [entries, setEntries] = useState<Entry[]>([WELCOME]);
@@ -46,9 +43,7 @@ export function Terminal({ resumeHref }: { resumeHref: string | null }) {
       setOpen(true);
     };
     const onKey = (e: KeyboardEvent) => {
-      const combo = (e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k";
-      const tick = e.key === "`" && !e.metaKey && !e.ctrlKey && !e.altKey;
-      if (combo || (tick && (!isTyping(e.target) || e.target === input.current))) {
+      if (isTerminalShortcut(e, input.current)) {
         e.preventDefault();
         if (open) setOpen(false);
         else show();
@@ -63,6 +58,11 @@ export function Terminal({ resumeHref }: { resumeHref: string | null }) {
       window.removeEventListener(TERMINAL_OPEN, show);
     };
   }, [open]);
+
+  // Loaded on demand by TerminalLauncher, which swallowed the shortcut that asked for it.
+  useEffect(() => {
+    if (startOpen) window.dispatchEvent(new Event(TERMINAL_OPEN));
+  }, [startOpen]);
 
   // Slide in / out (before paint, so it never flashes). Closing finishes before the page becomes
   // interactive again and queued actions run.
