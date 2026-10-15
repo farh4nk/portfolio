@@ -1,76 +1,90 @@
-# Project Handoff (updated 2026-10-13, evening)
+# Project Handoff (updated 2026-10-14, night)
 
 ## Where we are
-This is Farhan Khan's single-page portfolio: Next.js 16.4 static export, Tailwind v4, GSAP 3.15 and Lenis, served on Cloudflare Workers. Phases 1–5 of 6 are done and live at https://farhan-khan.farhank-dev.workers.dev; Phase 6 step 1 (LCP) is shipped. The private repo is https://github.com/farh4nk/portfolio, at `main` = `f055649` (deployed). Live mobile Lighthouse: perf 94 simulated / 96 devtools, LCP 2.2 s / 1.7 s, a11y 100 (was 64, LCP 11.3 s).
+Farhan Khan's single-page portfolio is **launched and complete**: all 6 phases are done, and the personal copy is filled in. Stack: Next.js 16.4 static export, Tailwind v4, GSAP 3.15 and Lenis, served on Cloudflare Workers at **https://portfolio.farhankhan.workers.dev** (worker `portfolio`, account subdomain `farhankhan`; renamed 2026-10-14 from `farhan-khan.farhank-dev.workers.dev`, which is now dead). The private repo is https://github.com/farh4nk/portfolio; `main` is pushed and deployed. Local Lighthouse: perf 91, a11y 100, best practices 100, SEO 100. Observed LCP is about 50–470 ms.
 
 The site has:
-- **Boot intro and terminal.**
-- **Hero:** the name, a typing role line, and the headshot top-right with a face-detection overlay that fades away.
-- **Featured Projects:** a bento of Quenova, Brain Invaders (tall), MIRA (wide) and a full-width Cribby banner, each with a Flip case file. Below it is the hackathon timeline (6 events, 3 wins).
-- **Experience:** a scroll-drawn circuit timeline.
-- **Skills:** the pinned stack scene, with cards on mobile.
-- **About:** text only. Then Contact.
-
-All images and `resume.pdf` are in `public/`. The only placeholders left are the personal copy strings Farhan will write himself.
+- **Boot intro and terminal.** The terminal is lazy-loaded.
+- **Hero:**
+  - A pin icon with "NYC".
+  - The name, the typing roles, and Farhan's tagline and summary.
+  - The headshot with its face-detection overlay.
+  - Resume CTA → preview overlay.
+- **Featured Projects:** a bento grid whose cards open lazy-loaded case files, plus the hackathon timeline (6 events, 3 wins).
+- **Experience:** Cornell Tech, The Bideshi and NYC DSS. The medical ed role was removed.
+- **Skills, About** (3-paragraph bio) and **Contact** (the blurb wraps at the heading's width).
+- **SEO and assets:** OG image, sitemap, robots, the FK. favicon, WebP images, and `_headers` cache rules.
 
 ## Next steps (ordered)
-1. **Phase 6, remaining** (about 75 min):
-   - Accessibility and keyboard audit: nav, case files, terminal, hackathon nodes (~30 min).
-   - Reduced-motion pass (~15 min).
-   - OG image, sitemap, Cloudflare Web Analytics (~30 min).
-   - Optional perf: WebP/AVIF images (~450 KiB savings), ~100 KiB unused JS, cache TTLs.
-2. **Remind Farhan to fill the `[ TODO ]` copy** in `content/profile.ts` (`tagline`, `summary`, `bio`, `contactBlurb`) before he shares the site. Don't draft it for him.
-3. **Open offers he hasn't answered:**
-   - Rename the nav items "work" → "projects" and "stack" → "skills" (the headings already say Featured Projects and Skills).
-   - An in-page resume preview overlay.
+1. **Old worker cleanup:** confirm Farhan deleted the orphaned `farhan-khan` worker (dashboard → Workers & Pages → farhan-khan → Settings → Delete). `wrangler delete` was blocked by the permission classifier, so it's his to do.
+2. **Otherwise nothing is required.** Wait for Farhan's next request.
+3. **Optional: analytics.** Farhan creates a Web Analytics site in the dashboard (Analytics & Logs → Web Analytics → Add site → the workers.dev host), pastes the token into `profile.analyticsToken` in `content/profile.ts`, then deploys.
+4. **Optional: phone number.** `public/resume.pdf` shows his phone number, which conflicts with the "no phone number" rule. He decides whether to swap the PDF.
+5. **Optional:**
+   - Responsive `srcset` images (~105 KiB on mobile).
+   - Remind him to run LinkedIn Post Inspector before he shares.
+   - Make the repo public, after removing the MIRA-keys pointer from `.claude/sessions/`.
 
 ## Active blockers
 - None.
 
 ## Standing decisions & constraints
 - **Single long page** with anchor nav. Project detail lives in full-screen case files (`#work/<slug>`); Back or Esc closes them.
+- **Nav labels stay "work" and "stack".** Farhan declined the rename.
 - **No custom cursor and no magnetic buttons.** He declined both.
-- **Personal first-person copy is Farhan's.** Leave visible `[ TODO ]` placeholders and never draft it; this is saved in memory. Factual project copy is fine to write.
+- **Personal first-person copy is Farhan's.** Never draft it (saved in memory). Fixing clear typos is fine, but say so. The copy lives in `content/profile.ts`: `tagline`, `summary`, `bio[]` and `contactBlurb`.
 - **Copy accuracy:** only state what the code, Devpost or demos confirm.
-  - Check stacks against the repo when one is public (e.g. Cribby omits ElevenLabs, which was dropped during the build).
-  - Prize names: "Winner, EquiTech Track", "Best First-Time Hack", "Best Use of Presage" (no "[MLH]", per his request).
-  - MIRA uses HTTP frame POSTs and YOLOv8, with no WebSockets and no depth estimation. He didn't pitch reciPal. LUNA has no backend link. Quenova links to the site only.
-  - Team builds show his part via the `role` field, in his own Devpost words.
-  - Staged animations are labeled as such (MIRA "detection pass · simulated").
-- **Hackathon terms:** 01–05 are Fall 2025, 06 is Fall 2026; keep the general `term` labels as-is (his call).
-- **Featured cards:** Quenova plus the winners (MIRA, Brain Invaders, Cribby). reciPal, LUNA and NutriScope stay compact in the hackathon timeline.
-- **Layout choices he asked for:**
-  - The headshot sits only in the hero; About has no portrait.
-  - The hero schematic and the stats strip are removed.
-  - The footer is the NYC clock plus the terminal hint, with no "built with" line.
-- **No phone number.** The medical ed role stays generic. Hosting stays on `workers.dev` (he doesn't own `farhan.dev`; don't imply it).
+  - Prize names: "Winner, EquiTech Track", "Best First-Time Hack", "Best Use of Presage" (no "[MLH]").
+  - MIRA uses HTTP frame POSTs and YOLOv8, with no WebSockets and no depth estimation. He didn't pitch reciPal. LUNA has no backend link. Quenova links to the site only. Cribby omits ElevenLabs.
+  - Team builds show his part via the `role` field.
+  - Staged animations are labeled (MIRA "detection pass · simulated").
+- **Experience:** no medical ed platform role until it's public. A role is "current" only if its `dates` contains "Present".
+- **Hero location line:** pin icon plus `profile.city` only. No `//`, no "software engineer", and no skyline icon (tried; he rejected it). The terminal `whoami` still uses `profile.kicker`.
+- **Hackathon terms:** 01–05 are Fall 2025, 06 is Fall 2026.
+- **Featured cards:** Quenova plus the winners (MIRA, Brain Invaders, Cribby). The rest stay in the timeline.
+- **Layout:**
+  - The headshot is in the hero only.
+  - No stats strip.
+  - The footer is the NYC clock plus the terminal hint.
+- **No phone number on the site.** Hosting stays on `workers.dev` (he's fine with that suffix); don't imply he owns a custom domain.
+- **The account subdomain `farhankhan` is shared** by every worker on the account (`portfolio`, `quenova` (also `quenova.app`), `project-luna` (dead project)). Changing it renames all their workers.dev URLs; it can only be changed in the dashboard (the API PUT returns 10036 "Account already has an associated subdomain").
+- **Resume preview:** desktop only (`canPreviewResume`). `ResumeLink` stays a real `<a>` and only intercepts plain left-clicks.
 - **Where things live:**
   - All copy is in `content/*.ts`.
   - Tokens are in `app/globals.css`.
-  - GSAP plugins are registered once in `lib/gsap.ts` (`MOTION_OK`, `SCRAMBLE_CHARS` without `< > &`).
+  - GSAP core plugins (ScrollTrigger, SplitText, ScrambleText) are registered in `lib/gsap.ts`. Flip is registered in the lazy `CaseFile.tsx`.
+  - Don't import heavy modules into the main bundle: overlays load via `TerminalLauncher` and `CaseFileController` (`next/dynamic`, `ssr: false`), and Lenis is a dynamic import.
 - **Motion rules:**
   - All animation goes through `gsap.matchMedia()`.
-  - Content is hidden only under `html.js:not(.motion-reduced)`.
-  - Anything above the fold waits for `whenBooted()` from `lib/events.ts`.
-  - The hero (`[data-hero-name]`, `[data-hero-item]`) is CSS-hidden only when `:not(.booting)`, so it paints under the boot overlay and LCP lands on first paint. HeroIntro's GSAP from-states re-hide it on hydration. Don't move those hide rules back.
-- **LCP image:** `MediaFrame` `priority` prop → `loading="eager"` + `fetchPriority="high"` (Next 16 prefers these over `preload`). Images in `public/` are downscaled to display size (`unoptimized: true`, so nothing resizes them at build).
-- **The repo stays private** until the MIRA-keys pointer is removed from `.claude/sessions/`. To publish: `gh repo edit farh4nk/portfolio --visibility public --accept-visibility-change-consequences`.
+  - Content is hidden only under `html.js:not(.motion-reduced)`. The class is kept in step with OS changes by the pre-paint script.
+  - Anything above the fold waits for `whenBooted()`.
+  - The hero hide rules are `:not(.booting)` so LCP lands on first paint. Don't move them.
+- **Modals** (case file, terminal, resume):
+  - Inert `body > header, main, footer`.
+  - Call `lockScroll`.
+  - Use `data-lenis-prevent`.
+  - Focus the close button via `gsap.delayedCall(0.05)`; the dialog starts out `visibility: hidden`.
+  - Restore focus on close.
+- **The repo stays private** until the MIRA-keys pointer is removed from `.claude/sessions/`.
 
 ## Gotchas that remain true
-- **Next 16.4 is newer than training data.** Read `node_modules/next/dist/docs/` (per `AGENTS.md`) before using unfamiliar APIs; the `next/image` `priority` prop is deprecated in favor of `preload`.
-- **Dev HMR leaves `data-reveal` elements invisible** after an edit hot-reloads them. Tell Farhan to hard-reload (⌘⇧R); it's not a production bug.
-- **Verifying motion:**
-  - Headless `--screenshot` throttles rAF. Drive real Chrome over CDP (`--remote-debugging-port`, `Input.dispatchMouseEvent`/`mouseWheel`, `Emulation.setDeviceMetricsOverride` for a true 390px).
-  - Set `sessionStorage.booted='1'` and reload to skip the boot intro.
-- **Lenis:** it overrides native `scrollIntoView`; use `lib/scroll.ts` (`scrollToElement`, `lockScroll`). Overlays and scroll panels need `data-lenis-prevent`.
-- **The pinned stack scene must call `ScrollTrigger.sort()` and `refresh()`** after creating its pin.
-- **`[data-node]` is used by both** the timeline and the stack schematic. Scope selectors.
-- **Images:** filenames must match `content/*.ts` exactly (`brain-invaders.jpg` is a jpg). Crop focus defaults to the top; set `imageFocus: "center"` for logos.
-- **npm 11 install-script approvals:** esbuild, workerd and unrs-resolver are approved. New packages with install scripts need `npm install-scripts approve <pkg>`.
-- **`turbopack.root: __dirname` is pinned** because of a stray `~/Code/package-lock.json`. Tailwind loads via the `@tailwindcss/turbopack` rule, not PostCSS.
-- **Deploy:** `npm run deploy` (Wrangler is logged in). `npm run preview` or `npx serve out` serves the build locally.
-- **The `!` bash prefix doesn't work in the VS Code extension.** Run interactive logins in the background.
-- **Devpost blocks direct fetches.** Use `curl https://r.jina.ai/<url>`, adding `-H "X-Return-Format: html"` for prizes, team and tags.
-- **Lighthouse:** `npx -y lighthouse@12 <url> --quiet --chrome-flags="--headless=new" --output=json`. Default simulated mode (= PageSpeed Insights) reads lower than `--throttling-method=devtools`; check `observedLargestContentfulPaint` in the `metrics` audit for real paint time.
-- **CDP probing:** `Page.addScriptToEvaluateOnNewDocument` didn't fire in headless Chrome 155. Inject a probe `<script>` after `<head>` in a copy of `out/`, serve it, read results back with `Runtime.evaluate`. Write Node output to a file (`process.exit` drops piped stdout).
-- **Session preference:** ADHD mode is on. Lead with the next action, use numbered steps, cap lists at 5, use concrete time estimates, and skip filler.
+- **Next 16.4 is newer than training data.** Read `node_modules/next/dist/docs/` first.
+  - Metadata routes need `export const dynamic = "force-static"` under `output: "export"`.
+  - The `/opengraph-image` output has no file extension; `public/_headers` sets its PNG type.
+- **Images:** `unoptimized: true`, so files in `public/images/` must already be WebP at display size (`cwebp -q 80 -m 6`). Filenames must match `content/*.ts`. Set `imageFocus: "center"` for logos.
+- **Dev HMR leaves `data-reveal` elements invisible.** Hard-reload (⌘⇧R); it's not a production bug.
+- **Verifying in Chrome over CDP:**
+  - Launch real Chrome with `--remote-debugging-port=9333` and call `Page.bringToFront`, or rAF throttles and GSAP never completes.
+  - Screenshot clips use page coordinates (add `scrollY`).
+  - Skip the boot intro with `sessionStorage.booted='1'` plus a reload.
+  - Write Node output to a file.
+- **Lenis overrides `scrollIntoView`.** Use `lib/scroll.ts`.
+- **The pinned stack scene must call `ScrollTrigger.sort()` and `refresh()`.** `[data-node]` is shared, so scope selectors.
+- **npm 11 install-script approvals:** esbuild, workerd and unrs-resolver are approved.
+- **`turbopack.root: __dirname` is pinned**, and Tailwind loads via the `@tailwindcss/turbopack` rule.
+- **Deploy:** `npm run deploy`. For about a minute afterwards, new files can 404 on some edges while it propagates.
+- **Local preview:** `npx wrangler dev --port 8788` applies `_headers`; `npx serve out` doesn't.
+- **ESLint ignores `.wrangler/**`.**
+- **The `!` bash prefix doesn't work in the VS Code extension.** Devpost blocks fetches, so use `r.jina.ai`. Gamma returns 403 to curl but is fine in a browser.
+- **Lighthouse:** `npx -y lighthouse@12 <url> --quiet --chrome-flags="--headless=new" --output=json`. Check `observedLargestContentfulPaint`. Local simulated perf reads lower than live.
+- **Session preference:** ADHD mode is on. Lead with the next action, use numbered steps, cap lists at 5, give concrete time estimates, and skip filler.

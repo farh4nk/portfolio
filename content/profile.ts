@@ -22,7 +22,7 @@ export const profile = {
   contactBlurb: "Seeking software engineering/machine learning/forward deployed engineering internships.",
   email: "farhank.dev@gmail.com",
   // Live URL; used for canonical, Open Graph and the sitemap.
-  siteUrl: "https://farhan-khan.farhank-dev.workers.dev",
+  siteUrl: "https://portfolio.farhankhan.workers.dev",
   // Cloudflare Web Analytics site token (dashboard → Analytics & Logs → Web Analytics). Empty = no beacon.
   analyticsToken: "",
   links: {

@@ -1,7 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  // Deploys to https://farhan-khan.<your-subdomain>.workers.dev
-  "name": "farhan-khan",
+  // Deploys to https://portfolio.<account-subdomain>.workers.dev
+  "name": "portfolio",
   "compatibility_date": "2026-10-01",
   "assets": {
     "directory": "./out",
