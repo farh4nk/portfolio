@@ -13,7 +13,7 @@ export const profile = {
   tagline: "Building systems for positive impact.",
   summary: "Software engineer with experience in full stack architecture, research settings, robotics, and ML.",
   location: "New York, NY",
-  // Hero location line, between the pin and skyline icons.
+  // Hero location line, after the pin icon.
   city: "NYC",
   portrait: "/images/portrait.webp",
   bio: ["[ TODO: bio paragraph 1 ]", "[ TODO: bio paragraph 2 ]"],

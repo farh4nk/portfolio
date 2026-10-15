@@ -1,6 +1,6 @@
 import { profile } from "@/content/profile";
 import { publicAsset } from "@/lib/assets";
-import { PinIcon, SkylineIcon } from "../ui/CityIcons";
+import { PinIcon } from "../ui/PinIcon";
 import { CornerMarks } from "../ui/CornerMarks";
 import { MediaFrame } from "../ui/MediaFrame";
 import { ResumeLink } from "../resume/ResumeLink";
@@ -42,15 +42,12 @@ export function Hero() {
           </figure>
 
           <div className="lg:col-start-1 lg:row-start-1">
-            {/* Icons sit outside the kicker span: its scramble rewrites the span's text. */}
+            {/* The pin sits outside the kicker span: its scramble rewrites the span's text. */}
             <p className="label-mono mb-6 flex items-center gap-2">
               <span className="text-accent">
                 <PinIcon />
               </span>
               <span data-hero-kicker>{profile.city}</span>
-              <span className="text-accent">
-                <SkylineIcon />
-              </span>
             </p>
             <h1
               data-hero-name
